@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArithmeticGenerator", "ArithmeticGenerator\ArithmeticGenerator.csproj", "{BF6C10FD-5EFC-4955-8113-E36EECD78E2A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF6C10FD-5EFC-4955-8113-E36EECD78E2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6C10FD-5EFC-4955-8113-E36EECD78E2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6C10FD-5EFC-4955-8113-E36EECD78E2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6C10FD-5EFC-4955-8113-E36EECD78E2A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_NeutralResourcesLanguage = zh-Hans
+		SolutionGuid = {84A8F2DF-E6F5-44C7-BCBE-2BC9CE9F3F03}
+	EndGlobalSection
+EndGlobal

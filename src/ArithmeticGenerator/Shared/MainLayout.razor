@@ -1,0 +1,69 @@
+﻿@inherits LayoutComponentBase
+
+<style>
+    .mud-appbar .mud-toolbar-gutters {
+        padding-left: 10px;
+        padding-right: 0px;
+    }
+
+    .mud-appbar .mud-button-root .mud-icon-button-label .mud-icon-root {
+        width: 0.7em;
+        height: 0.7em;
+    }
+</style>
+
+<MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="_customTheme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Class="px-0" Elevation="25" Dense="true" @onmouseup="MouseUp" @onmousedown="MouseDown">
+
+        <div class="d-flex align-center" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
+            <div class="app-icon"></div>
+            <MudText Typo="Typo.subtitle2" Class="ml-1 mt-1 cursor-default">口算出题工具</MudText>
+        </div>
+
+        <MudSpacer />
+
+        <div class="d-flex" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
+            <MudTooltip Text="打赏" Delay="300">
+                <MudIconButton Icon="@Icons.Material.Filled.Coffee"
+                               Size="Size.Medium"
+                               OnClick="OpenPayDialog" />
+            </MudTooltip>
+
+            @if (AppSettings.AppThemeInt == 0)
+            {
+                <MudTooltip Text="浅色主题" Delay="300">
+                    <MudIconButton Icon="@Icons.Material.Filled.WbSunny"
+                                   Size="Size.Medium"
+                                   OnClick="ChangeTheme" />
+                </MudTooltip>
+            }
+            else if (AppSettings.AppThemeInt == 1)
+            {
+                <MudTooltip Text="深色主题" Delay="300">
+                    <MudIconButton Icon="@Icons.Material.Filled.DarkMode"
+                                   Size="Size.Medium"
+                                   OnClick="ChangeTheme" />
+                </MudTooltip>
+            }
+            else
+            {
+                <MudTooltip Text="使用系统主题" Delay="300">
+                    <MudIconButton Icon="@Icons.Material.Filled.AutoMode"
+                                   Size="Size.Medium"
+                                   OnClick="ChangeTheme" />
+                </MudTooltip>
+            }
+
+            <TitleBar />
+        </div>
+    </MudAppBar>
+    <MudMainContent Class="mx-4 my-2">
+        @Body
+    </MudMainContent>
+
+</MudLayout>
