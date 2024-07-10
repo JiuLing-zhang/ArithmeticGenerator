@@ -33,25 +33,15 @@ public partial class App : Application
     private void Init()
     {
         IServiceCollection services = new ServiceCollection();
-        services.AddSingleton<AppSettingWriter>();
+        services.AddSingleton<SettingWriter>();
         services.AddSingleton<AppSettings>((_) =>
         {
-            if (!File.Exists(AppBase.ConfigPath))
-            {
-                return new AppSettings();
-            }
-            string json = File.ReadAllText(AppBase.ConfigPath);
-            try
-            {
-                var appSettings = JsonSerializer.Deserialize<AppSettings>(json);
-                return appSettings ?? new AppSettings();
-            }
-            catch (JsonException)
-            {
-                return new AppSettings();
-            }
+            return GetConfig<AppSettings>(AppBase.AppSettingConfigPath);
         });
-
+        services.AddSingleton<QuestionConfig>((_) =>
+        {
+            return GetConfig<QuestionConfig>(AppBase.QuestionConfigPath);
+        });
         services.AddSingleton(LogManager.GetLogger());
         services.AddSingleton<UpdateHelper>();
         services.AddSingleton<WindowMain>();
@@ -68,5 +58,23 @@ public partial class App : Application
         _mainWindow = sp.GetRequiredService<WindowMain>();
         Application.Current.MainWindow = _mainWindow;
         _mainWindow.Show();
+    }
+
+    private T GetConfig<T>(string fileName) where T : new()
+    {
+        if (!File.Exists(fileName))
+        {
+            return new T();
+        }
+        string json = File.ReadAllText(fileName);
+        try
+        {
+            var obj = JsonSerializer.Deserialize<T>(json);
+            return obj ?? new T();
+        }
+        catch (JsonException)
+        {
+            return new T();
+        }
     }
 }

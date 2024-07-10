@@ -12,7 +12,7 @@ public partial class MainLayout
     private AppSettings AppSettings { get; set; } = default!;
 
     [Inject]
-    private AppSettingWriter AppSettingWriter { get; set; } = default!;
+    private SettingWriter SettingWriter { get; set; } = default!;
 
     [Inject]
     private IDialogService Dialog { get; set; } = default!;
@@ -70,7 +70,7 @@ public partial class MainLayout
         {
             AppSettings.AppThemeInt = 0;
         }
-        AppSettingWriter.Save(AppSettings);
+        SettingWriter.SaveAppSetting(AppSettings);
         await SetTheme();
     }
 

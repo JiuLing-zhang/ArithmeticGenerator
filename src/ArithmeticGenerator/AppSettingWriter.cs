@@ -1,16 +1,28 @@
 ﻿using System.IO;
 
 namespace ArithmeticGenerator;
-public class AppSettingWriter()
+
+// TODO rename to SettingWriter
+public class SettingWriter()
 {
-    public void Save(AppSettings appSettings)
+    public void SaveAppSetting(AppSettings appSettings)
     {
-        var directory = Path.GetDirectoryName(AppBase.ConfigPath) ?? throw new ArgumentException("配置文件读取失败");
+        SaveToFile<AppSettings>(AppBase.AppSettingConfigPath, appSettings);
+    }
+
+    public void SaveQuestionConfig(QuestionConfig questionConfig)
+    {
+        SaveToFile<QuestionConfig>(AppBase.QuestionConfigPath, questionConfig);
+    }
+
+    private void SaveToFile<T>(string fileName, T obj)
+    {
+        var directory = Path.GetDirectoryName(fileName) ?? throw new ArgumentException("文件读取失败");
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
-        string appConfigString = System.Text.Json.JsonSerializer.Serialize(appSettings);
-        File.WriteAllText(AppBase.ConfigPath, appConfigString);
+        string json = System.Text.Json.JsonSerializer.Serialize(obj);
+        File.WriteAllText(fileName, json);
     }
 }

@@ -1,13 +1,33 @@
 ﻿@page "/"
-@using JiuLing.CommonLibs.ExtensionMethods
 
 <style>
-    .dialog-blurry {
+    .my-custom-class {
         backdrop-filter: blur(10px);
     }
 </style>
 
-<MudSwitch T="string"
-           Label="test"
-           Color="Color.Primary" />
+<div class="d-flex flex-grow-1 gap-4">
+    <MudPaper Width="200px" Elevation="0">
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Add"
+                   FullWidth="true"
+                   OnClick="AddSheetAsync">新建题库</MudButton>
+        <MudDivider />
+        @if (QuestionConfig.Sheets != null)
+        {
+            <MudList @bind-SelectedValue="SheetSelectItem"
+                     T="string">
+                @foreach (var sheet in QuestionConfig.Sheets)
+                {
+                    <MudListItem Text="@(sheet.Name)"
+                                 Value="@(sheet.Name)" />
+                }
+            </MudList>
+        }
+    </MudPaper>
+
+    <MudPaper Class="flex-grow-1" Elevation="0">
+
+    </MudPaper>
+</div>
 

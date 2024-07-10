@@ -1,0 +1,23 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudTextField @bind-Value="SheetName"
+                      Label="请输入题库名称"
+                      Variant="Variant.Text"></MudTextField>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="SaveData">添加</MudButton>
+        <MudButton OnClick="Cancel">取消</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    public string SheetName { get; set; } = "";
+    private void Cancel() => MudDialog.Cancel();
+
+    private void SaveData()
+    {
+        MudDialog.Close(DialogResult.Ok(SheetName));
+    }
+}

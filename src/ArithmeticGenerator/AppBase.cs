@@ -19,7 +19,12 @@ namespace ArithmeticGenerator
         /// <summary>
         /// 配置文件路径
         /// </summary>
-        public static string ConfigPath { get; set; } = Path.Combine(DataPath, FriendlyName, "config.json");
+        public static string AppSettingConfigPath { get; set; } = Path.Combine(DataPath, FriendlyName, "appsetting.json");
+        
+        /// <summary>
+        /// 题目配置文件路径
+        /// </summary>
+        public static string QuestionConfigPath { get; set; } = Path.Combine(DataPath, FriendlyName, "question.json");
 
         public static string Version { get; set; } = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString();
     }

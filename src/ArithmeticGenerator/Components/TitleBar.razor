@@ -6,10 +6,9 @@
                        OnClick="MinimizeAsync" />
     </MudTooltip>
 
-    @*     <MudIconButton Icon=@(_maximizerIcon)
-    Size="Size.Medium"
-    Disabled="true"
-    OnClick="MaximizeAsync" /> *@
+    <MudIconButton Icon=@(_maximizerIcon)
+                   Size="Size.Medium"
+                   OnClick="MaximizeAsync" />
 
     <MudTooltip Text="关闭" Delay="600">
         <MudIconButton Icon="@Icons.Material.Filled.Close"
