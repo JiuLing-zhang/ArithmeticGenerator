@@ -11,10 +11,12 @@
         <MudButton Variant="Variant.Filled"
                    StartIcon="@Icons.Material.Filled.Add"
                    FullWidth="true"
+                   Class="mb-3"
                    OnClick="AddSheetAsync">新建题库</MudButton>
         <MudDivider />
         @if (QuestionConfig.Sheets != null)
         {
+            <MudDivider />
             <MudList @bind-SelectedValue="SheetSelectItem"
                      T="string">
                 @foreach (var sheet in QuestionConfig.Sheets)
@@ -27,7 +29,19 @@
     </MudPaper>
 
     <MudPaper Class="flex-grow-1" Elevation="0">
+        @if (SheetSelectItem.IsNotTrimEmpty())
+        {
+            <MudButtonGroup Variant="Variant.Filled">
+                <MudButton Variant="Variant.Outlined" Disabled="true">@(SheetSelectItem)</MudButton>
 
+                <MudTooltip Text="重命名" Delay="200">
+                    <MudIconButton Icon="@Icons.Material.Filled.DriveFileRenameOutline" OnClick="RenameSheetAsync"></MudIconButton>
+                </MudTooltip>
+                <MudTooltip Text="删除" Delay="200">
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteSheetAsync"></MudIconButton>
+                </MudTooltip>
+            </MudButtonGroup>
+        }
     </MudPaper>
 </div>
 

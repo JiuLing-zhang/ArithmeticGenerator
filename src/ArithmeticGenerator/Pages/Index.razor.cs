@@ -78,7 +78,7 @@ public partial class Index
             BackgroundClass = "my-custom-class",
             NoHeader = true
         };
-        var dialog = await DialogService.ShowAsync<AddSheet>("添加题库", options);
+        var dialog = await DialogService.ShowAsync<EditSheetName>("编辑题库", options);
         var result = await dialog.Result;
 
         if (result == null || result.Canceled)
@@ -101,7 +101,7 @@ public partial class Index
 
         if (QuestionConfig.Sheets.Any(x => x.Name.ToLower() == newName.ToLower()))
         {
-            Snackbar.Add("添加失败，名称已经存在", Severity.Error);
+            Snackbar.Add("操作失败，名称已经存在", Severity.Error);
             return;
         }
 
@@ -114,6 +114,74 @@ public partial class Index
             Name = newName,
             IsActive = true
         });
+        SettingWriter.SaveQuestionConfig(QuestionConfig);
+    }
+    private async Task RenameSheetAsync()
+    {
+        var options = new DialogOptions
+        {
+            BackgroundClass = "my-custom-class",
+            NoHeader = true
+        };
+        var dialog = await DialogService.ShowAsync<EditSheetName>("编辑题库", options);
+        var result = await dialog.Result;
+
+        if (result == null || result.Canceled)
+        {
+            // Snackbar.Add("操作取消", Severity.Normal);
+            return;
+        }
+
+        var newName = ((result.Data ?? "").ToString() ?? "").Trim();
+        if (newName.IsEmpty())
+        {
+            Snackbar.Add("非法名称", Severity.Error);
+            return;
+        }
+
+        if (newName.ToLower() == SheetSelectItem.ToLower())
+        {
+            return;
+        }
+
+        if (QuestionConfig.Sheets == null || QuestionConfig.Sheets.Count == 0)
+        {
+            QuestionConfig.Sheets = new List<SheetConfig>();
+        }
+
+        if (QuestionConfig.Sheets.Any(x => x.Name.ToLower() == newName.ToLower()))
+        {
+            Snackbar.Add("操作失败，名称已经存在", Severity.Error);
+            return;
+        }
+
+        QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Name = newName;
+        SettingWriter.SaveQuestionConfig(QuestionConfig);
+        await InvokeAsync(StateHasChanged);
+    }
+    private async Task DeleteSheetAsync()
+    {
+        if (QuestionConfig.Sheets == null || QuestionConfig.Sheets.Count == 0)
+        {
+            return;
+        }
+
+        bool? result = await DialogService.ShowMessageBox(
+         "删除",
+         $"确认要删除题库【{SheetSelectItem}】吗？",
+         yesText: "删除", cancelText: "取消");
+
+        if (result == null || result.Value != true)
+        {
+            return;
+        }
+
+        QuestionConfig.Sheets.RemoveAll(x => x.Name == SheetSelectItem);
+
+        if (QuestionConfig.Sheets.Any())
+        {
+            QuestionConfig.Sheets.First().IsActive = true;
+        }
         SettingWriter.SaveQuestionConfig(QuestionConfig);
     }
 }
