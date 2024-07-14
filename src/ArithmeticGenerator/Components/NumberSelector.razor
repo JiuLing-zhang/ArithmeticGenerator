@@ -68,6 +68,6 @@
 
     private async Task UpdateNumberAsync()
     {
-        await NumberChanged.InvokeAsync(new CustomNumber() { Part1Length = _part1Length, Part2Length = _part2Length });
+        await NumberChanged.InvokeAsync(new CustomNumber(_part1Length, _part2Length));
     }
 }
