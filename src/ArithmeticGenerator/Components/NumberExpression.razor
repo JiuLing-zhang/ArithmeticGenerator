@@ -1,0 +1,159 @@
+﻿@using ArithmeticGenerator.Models
+
+<style>
+    .my-custom-class {
+        backdrop-filter: blur(10px);
+    }
+
+    .custom-striped {
+        background: repeating-linear-gradient( 45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px );
+        color: white !important;
+    }
+</style>
+
+<NumberSelector NumberChanged="@OnNumber1Changed"></NumberSelector>
+<MudToggleGroup @bind-Value="Operator"
+                T="OperatorEnum"
+                Class="my-2"
+                Size="Size.Small"
+                SelectedClass="@ToggleStyle"
+                Style="width: 10rem">
+    <MudToggleItem Value="@(OperatorEnum.Add)" Text="@(OperatorEnum.Add.GetDescription())" />
+    <MudToggleItem Value="@(OperatorEnum.Subtract)" Text="@(OperatorEnum.Subtract.GetDescription())" />
+    <MudToggleItem Value="@(OperatorEnum.Multiply)" Text="@(OperatorEnum.Multiply.GetDescription())" />
+    <MudToggleItem Value="@(OperatorEnum.Divide)" Text="@(OperatorEnum.Divide.GetDescription())" />
+</MudToggleGroup>
+
+<NumberSelector NumberChanged="@OnNumber2Changed"></NumberSelector>
+
+<div class="d-flex align-center mt-2">
+    <MudChip T="string" Color="Color.Success">@(_numberValue)</MudChip>
+    <MudChipSet @bind-SelectedValues="ResultRules"
+                T="ResultRuleEnum"
+                Class="ml-2"
+                SelectionMode="SelectionMode.MultiSelection"
+                CheckMark="true"
+                Variant="Variant.Text"
+                Color="Color.Info">
+        @if (Operator == OperatorEnum.Subtract)
+        {
+            <MudChip Value="@(ResultRuleEnum.GreaterThanZero)" Text="@(ResultRuleEnum.GreaterThanZero.GetDescription())" />
+        }
+        @if (Operator == OperatorEnum.Multiply)
+        {
+            <MudChip Value="@(ResultRuleEnum.IsNotOne)" Text="@(ResultRuleEnum.IsNotOne.GetDescription())" />
+        }
+        @if (Operator == OperatorEnum.Divide)
+        {
+            <MudChip Value="@(ResultRuleEnum.IsInt)" Text="@(ResultRuleEnum.IsInt.GetDescription())" />
+            <MudChip Value="@(ResultRuleEnum.IsNotOne)" Text="@(ResultRuleEnum.IsNotOne.GetDescription())" />
+        }
+    </MudChipSet>
+
+
+    <MudButton Variant="Variant.Filled"
+               StartIcon="@Icons.Material.Filled.Save"
+               Color="Color.Success"
+               Size="Size.Small"
+               Class="ml-4"
+               OnClick="AddNumberExpression">添加题型</MudButton>
+
+</div>
+
+@code {
+    private const string ToggleStyle = "custom-striped";
+
+    private OperatorEnum _operator2;
+    public OperatorEnum Operator
+    {
+        get => _operator2;
+        set
+        {
+            _operator2 = value;
+            CreateNumberExpression();
+        }
+    }
+    private ResultRuleEnum _resultRule;
+    private IReadOnlyCollection<ResultRuleEnum> _resultRules = null!;
+    public IReadOnlyCollection<ResultRuleEnum> ResultRules
+    {
+        get => _resultRules;
+        set
+        {
+            _resultRules = value;
+            _resultRule = CombineRules(_resultRules);
+        }
+    }
+
+    private CustomNumber? _number1;
+    private CustomNumber? _number2;
+
+    private string _numberValue = "";
+
+
+    [Parameter]
+    public EventCallback<CustomExpression> ExpressionSelected { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Operator = OperatorEnum.Add;
+        base.OnInitialized();
+    }
+
+    private void OnNumber1Changed(CustomNumber number)
+    {
+        _number1 = number;
+        CreateNumberExpression();
+    }
+    private void OnNumber2Changed(CustomNumber number)
+    {
+        _number2 = number;
+        CreateNumberExpression();
+    }
+
+    private void CreateNumberExpression()
+    {
+        string number1Value = "";
+        if (_number1 != null)
+        {
+            number1Value = CreateNumberValue(_number1);
+        }
+        string number2Value = "";
+        if (_number2 != null)
+        {
+            number2Value = CreateNumberValue(_number2);
+        }
+        _numberValue = $"{number1Value} {Operator.GetDescription()} {number2Value} = ?";
+    }
+
+    private string CreateNumberValue(CustomNumber number)
+    {
+        var value1 = JiuLing.CommonLibs.RandomUtils.GetOneByLength(number.Part1Length);
+
+        if (number.Part2Length == 0)
+        {
+            return value1;
+        }
+        var value2 = JiuLing.CommonLibs.RandomUtils.GetOneByLength(number.Part2Length);
+        return $"{value1}.{value2}";
+    }
+
+    public static ResultRuleEnum CombineRules(IReadOnlyCollection<ResultRuleEnum> rules)
+    {
+        ResultRuleEnum combinedRule = 0;
+        foreach (var rule in rules)
+        {
+            combinedRule |= rule;
+        }
+        return combinedRule;
+    }
+
+    private async Task AddNumberExpression()
+    {
+        if (_number1 == null || _number2 == null)
+        {
+            return;
+        }
+        await ExpressionSelected.InvokeAsync(new CustomExpression(_number1, Operator, _number2, _resultRule));
+    }
+}
