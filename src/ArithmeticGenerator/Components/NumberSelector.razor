@@ -1,0 +1,73 @@
+﻿@using ArithmeticGenerator.Models
+
+<div class="d-flex">
+    <MudToggleGroup @bind-Value="Part1Length"
+                    T="int"
+                    Size="Size.Small"
+                    Style="width: 280px">
+        <MudToggleItem Value="-1" Text="@("整数位")" Disabled="true" />
+        <MudToggleItem Value="1" />
+        <MudToggleItem Value="2" />
+        <MudToggleItem Value="3" />
+    </MudToggleGroup>
+
+    <MudToggleGroup @bind-Value="Part2Length"
+                    T="int"
+                    Class="ml-2"
+                    Size="Size.Small"
+                    Style="width: 320px">
+        <MudToggleItem Value="-1" Text="@("小数位")" Disabled="true" />
+        <MudToggleItem Value="0" />
+        <MudToggleItem Value="1" />
+        <MudToggleItem Value="2" />
+        <MudToggleItem Value="3" />
+    </MudToggleGroup>
+</div>
+
+@code {
+    private int _part1Length;
+    public int Part1Length
+    {
+        get => _part1Length;
+        set
+        {
+            _part1Length = value;
+            OnPart1LengthChanged();
+        }
+    }
+
+    private int _part2Length;
+    public int Part2Length
+    {
+        get => _part2Length;
+        set
+        {
+            _part2Length = value;
+            OnPart2LengthChanged();
+        }
+    }
+
+    [Parameter]
+    public EventCallback<CustomNumber> NumberChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Part1Length = 2;
+        Part2Length = 0;
+        base.OnInitialized();
+    }
+
+    private void OnPart1LengthChanged()
+    {
+        UpdateNumberAsync().Wait();
+    }
+    private void OnPart2LengthChanged()
+    {
+        UpdateNumberAsync().Wait();
+    }
+
+    private async Task UpdateNumberAsync()
+    {
+        await NumberChanged.InvokeAsync(new CustomNumber() { Part1Length = _part1Length, Part2Length = _part2Length });
+    }
+}
