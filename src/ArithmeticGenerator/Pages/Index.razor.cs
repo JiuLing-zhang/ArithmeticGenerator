@@ -1,4 +1,6 @@
-﻿namespace ArithmeticGenerator.Pages;
+﻿using ArithmeticGenerator.Models;
+
+namespace ArithmeticGenerator.Pages;
 public partial class Index
 {
     [Inject]
@@ -20,7 +22,6 @@ public partial class Index
 
     [Inject]
     private IDialogService DialogService { get; set; } = default!;
-
 
     public string SheetSelectItem
     {
@@ -47,6 +48,9 @@ public partial class Index
             }
         }
     }
+
+    private List<CustomExpression>? Expressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions;
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
@@ -183,5 +187,30 @@ public partial class Index
             QuestionConfig.Sheets.First().IsActive = true;
         }
         SettingWriter.SaveQuestionConfig(QuestionConfig);
+    }
+
+    private void OnExpressionSelected(CustomExpression expression)
+    {
+        if (QuestionConfig.Sheets == null)
+        {
+            Snackbar.Add("保存失败，请选择题库", Severity.Error);
+            return;
+        }
+
+        if (QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions == null)
+        {
+            QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions = new List<CustomExpression>();
+        }
+        else
+        {
+            if (QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions.Any(x => x.Key == expression.Key))
+            {
+                Snackbar.Add("保存失败，题型已存在", Severity.Error);
+                return;
+            }
+        }
+        QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions.Add(expression);
+        SettingWriter.SaveQuestionConfig(QuestionConfig);
+        Snackbar.Add("保存成功", Severity.Success);
     }
 }

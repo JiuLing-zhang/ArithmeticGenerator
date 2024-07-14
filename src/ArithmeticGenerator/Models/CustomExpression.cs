@@ -4,37 +4,34 @@ namespace ArithmeticGenerator.Models;
 /// <summary>
 /// 等式
 /// </summary>
-public class CustomExpression
+/// <param name="number1">第一位数</param>
+/// <param name="operator">运算符</param>
+/// <param name="number2">第二位数</param>
+/// <param name="resultRule">结果约束条件</param>
+public class CustomExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, ResultRuleEnum resultRule)
 {
     /// <summary>
     /// 第一位数
     /// </summary>
-    public CustomNumber Number1 { get; set; }
+    public CustomNumber Number1 { get; set; } = number1;
 
     /// <summary>
     /// 运算符
     /// </summary>
-    public OperatorEnum Operator { get; set; }
+    public OperatorEnum Operator { get; set; } = @operator;
 
     /// <summary>
     /// 第二位数
     /// </summary>
-    public CustomNumber Number2 { get; set; }
+    public CustomNumber Number2 { get; set; } = number2;
 
     /// <summary>
     /// 结果约束条件
     /// </summary>
-    public ResultRuleEnum ResultRule { get; set; }
+    public ResultRuleEnum ResultRule { get; set; } = resultRule;
 
-    /// <param name="number1">第一位数</param>
-    /// <param name="operator">运算符</param>
-    /// <param name="number2">第二位数</param>
-    /// <param name="resultRule">结果约束条件</param>
-    public CustomExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, ResultRuleEnum resultRule)
-    {
-        Number1 = number1;
-        Operator = @operator;
-        Number2 = number2;
-        ResultRule = resultRule;
-    }
+    /// <summary>
+    /// 唯一键值
+    /// </summary>
+    public string Key => $"{Number1}_{Operator}_{Number2}_{ResultRule}";
 }

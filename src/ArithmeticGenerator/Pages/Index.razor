@@ -31,7 +31,8 @@
     <MudPaper Class="flex-grow-1" Elevation="0">
         @if (SheetSelectItem.IsNotTrimEmpty())
         {
-            <MudButtonGroup Variant="Variant.Filled">
+            <MudButtonGroup Variant="Variant.Filled"
+                            Class="mb-2">
                 <MudButton Variant="Variant.Outlined" Disabled="true">@(SheetSelectItem)</MudButton>
 
                 <MudTooltip Text="重命名" Delay="200">
@@ -41,6 +42,8 @@
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteSheetAsync"></MudIconButton>
                 </MudTooltip>
             </MudButtonGroup>
+
+            <NumberExpression ExpressionSelected="OnExpressionSelected"></NumberExpression>
         }
     </MudPaper>
 </div>
