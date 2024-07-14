@@ -213,4 +213,9 @@ public partial class Index
         SettingWriter.SaveQuestionConfig(QuestionConfig);
         Snackbar.Add("保存成功", Severity.Success);
     }
+
+    void ExpressionRemove(MudChip<string> chip)
+    {
+        // react to chip closed
+    }
 }

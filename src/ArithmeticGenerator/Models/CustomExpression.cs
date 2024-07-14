@@ -34,4 +34,9 @@ public class CustomExpression(CustomNumber number1, OperatorEnum @operator, Cust
     /// 唯一键值
     /// </summary>
     public string Key => $"{Number1}_{Operator}_{Number2}_{ResultRule}";
+
+    /// <summary>
+    /// 显示名称
+    /// </summary>
+    public string DisplayName => $"{Number1} {Operator.GetDescription()} {Number2}";
 }

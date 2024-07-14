@@ -44,6 +44,28 @@
             </MudButtonGroup>
 
             <NumberExpression ExpressionSelected="OnExpressionSelected"></NumberExpression>
+
+            <MudDivider Class="my-3" />
+
+            <div class="d-flex flex-grow-1 gap-4">
+                <MudPaper Width="270px" Elevation="0" Class="flex-column">
+                    <MudText Typo="Typo.subtitle1">已选题型</MudText>
+                    @if (Expressions == null)
+                    {
+                        <MudChip T="string" Label="true" Disabled="true">列表是空的</MudChip>
+                    }
+                    else
+                    {
+                        @foreach (var expression in Expressions)
+                        {
+                            <MudChip T="string" Label="true" Style="width:100%" Text="@(expression.DisplayName)" Value="@(expression.Key)" OnClose="ExpressionRemove" />
+                        }
+                    }
+                </MudPaper>
+
+                <MudPaper Class="flex-grow-1" Elevation="0">
+                </MudPaper>
+            </div>
         }
     </MudPaper>
 </div>
