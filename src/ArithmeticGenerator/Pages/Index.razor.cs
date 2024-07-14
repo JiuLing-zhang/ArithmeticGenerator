@@ -49,7 +49,7 @@ public partial class Index
         }
     }
 
-    private List<CustomExpression>? Expressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions;
+    private List<CustomExpression>? Expressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions?.OrderBy(x => x.DisplayName).ToList();
 
     protected override async Task OnInitializedAsync()
     {
