@@ -4,6 +4,10 @@
     .my-custom-class {
         backdrop-filter: blur(10px);
     }
+
+    .mud-tooltip-root.mud-tooltip-inline {
+        width: 100%;
+    }
 </style>
 
 <div class="d-flex flex-grow-1 gap-4">
@@ -58,7 +62,17 @@
                     {
                         @foreach (var expression in Expressions)
                         {
-                            <MudChip T="string" Label="true" Style="width:100%" Text="@(expression.DisplayName)" Value="@(expression.Key)" OnClose="ExpressionRemove" />
+                            <MudTooltip Text="@(expression.DisplayDescription)"
+                                        Arrow="true"
+                                        Placement="Placement.Right"
+                                        Color="Color.Primary">
+                                <MudChip T="string"
+                                         Label="true"
+                                         Text="@(expression.DisplayName)"
+                                         Value="@(expression.Key)"
+                                         Style="width:100%"
+                                         OnClose="ExpressionRemove" />
+                            </MudTooltip>
                         }
                     }
                 </MudPaper>

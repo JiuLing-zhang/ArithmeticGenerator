@@ -39,4 +39,22 @@ public class CustomExpression(CustomNumber number1, OperatorEnum @operator, Cust
     /// 显示名称
     /// </summary>
     public string DisplayName => $"{Number1} {Operator.GetDescription()} {Number2}";
+
+    /// <summary>
+    /// 显示描述
+    /// </summary>
+    public string DisplayDescription => CheckResultRuleEnumValues(ResultRule);
+
+    private string CheckResultRuleEnumValues(ResultRuleEnum result)
+    {
+        var descriptions = new List<string>();
+        foreach (ResultRuleEnum rule in Enum.GetValues(typeof(ResultRuleEnum)))
+        {
+            if (result.HasFlag(rule))
+            {
+                descriptions.Add(rule.GetDescription());
+            }
+        }
+        return string.Join(",", descriptions);
+    }
 }
