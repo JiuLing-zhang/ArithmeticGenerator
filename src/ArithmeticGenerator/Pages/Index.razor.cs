@@ -214,8 +214,20 @@ public partial class Index
         Snackbar.Add("保存成功", Severity.Success);
     }
 
-    void ExpressionRemove(MudChip<string> chip)
+    private void ExpressionRemove(MudChip<string> chip)
     {
-        // react to chip closed
+        if (QuestionConfig.Sheets == null)
+        {
+            Snackbar.Add("操作失败，请选择题库", Severity.Error);
+            return;
+        }
+
+        if (QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions == null)
+        {
+            return;
+        }
+
+        QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions.RemoveAll(x => x.Key == chip.Value);
+        SettingWriter.SaveQuestionConfig(QuestionConfig);
     }
 }
