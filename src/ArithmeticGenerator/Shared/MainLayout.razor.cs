@@ -23,27 +23,25 @@ public partial class MainLayout
         {
             PaletteLight = new PaletteLight()
             {
-                Primary = "#6EA1EF",
-                Secondary = Colors.Green.Accent4,
-                AppbarBackground = "#F5F5F5",
-                AppbarText = "#6EA1EF",
-                TableStriped = "#F5F5F5",
-                TableHover = "#F1F6FD",
-                DarkLighten = "#CACDD1"
+                Primary = "#009688",
+                AppbarBackground = "#FFFFFF",
+                AppbarText = "#009688",
+                Background = "#FFFFFF",
+                Surface = "#FFFFFF",
+                TextPrimary = "#000000",
+                TextSecondary = "#757575",
+                ActionDisabled = "#B0B0B0",
             },
             PaletteDark = new PaletteDark()
             {
-                Primary = "#6EA1EF",
-                AppbarBackground = "#1111",
-                AppbarText = "#6EA1EF",
+                Primary = "#009688",
+                AppbarBackground = "#333333",
+                AppbarText = "#009688",
                 Background = "#333333",
                 Surface = "#333333",
-                TableStriped = "#292929",
-                TableHover = "#182437",
-                DarkLighten = "#494C50",
-                Black = "#858585",
                 TextPrimary = "#FFFFFF",
-                OverlayDark = "#7575757A"
+                TextSecondary = "#B0B0B0",
+                ActionDisabled = "#9E9E9E",
             }
         };
     }

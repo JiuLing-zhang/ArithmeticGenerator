@@ -7,9 +7,14 @@
     }
 
     .mud-appbar .mud-button-root .mud-icon-button-label .mud-icon-root {
-        width: 0.7em;
-        height: 0.7em;
+        width: 12px;
+        height: 12px;
     }
+
+    .mud-typography-subtitle2 {
+        color: #9E9E9E;
+    }
+
 </style>
 
 <MudThemeProvider @ref="@_mudThemeProvider" @bind-IsDarkMode="@_isDarkMode" Theme="_customTheme" />
@@ -22,7 +27,7 @@
 
         <div class="d-flex align-center" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
             <div class="app-icon"></div>
-            <MudText Typo="Typo.subtitle2" Class="ml-1 mt-1 cursor-default">口算出题工具</MudText>
+            <MudText Typo="Typo.subtitle1" Class="ml-1 mt-1 cursor-default">口算出题工具</MudText>
         </div>
 
         <MudSpacer />

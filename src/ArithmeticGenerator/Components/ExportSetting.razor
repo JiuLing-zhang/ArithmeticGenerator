@@ -1,5 +1,5 @@
 ﻿
-<MudText Typo="Typo.subtitle1">导出设置</MudText>
+<MudText Typo="Typo.subtitle2">导出设置</MudText>
 
 <MudNumericField @bind-Value="IntValue" Label="题目个数" Variant="Variant.Text" Min="1" Max="500" />
 <MudToggleGroup @bind-Value="_topicRule"
@@ -23,7 +23,7 @@
     </MudTooltip>
 </MudToggleGroup>
 
-<MudText Typo="Typo.body2" Class="mt-2">导出方式</MudText>
+<MudText Typo="Typo.subtitle2" Class="mt-2">导出方式</MudText>
 <MudToggleGroup @bind-Value="_fileType"
                 T="FileTypeEnum"
                 Class="mt-2"

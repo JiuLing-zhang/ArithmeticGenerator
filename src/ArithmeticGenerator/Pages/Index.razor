@@ -16,8 +16,8 @@
                    StartIcon="@Icons.Material.Filled.Add"
                    FullWidth="true"
                    Class="mb-3"
+                   Color="Color.Primary"
                    OnClick="AddSheetAsync">新建题库</MudButton>
-        <MudDivider />
         @if (QuestionConfig.Sheets != null)
         {
             <MudDivider />
@@ -35,17 +35,21 @@
     <MudPaper Class="flex-grow-1" Elevation="0">
         @if (SheetSelectItem.IsNotTrimEmpty())
         {
-            <MudButtonGroup Variant="Variant.Filled"
-                            Class="mb-2">
-                <MudButton Variant="Variant.Outlined" Disabled="true">@(SheetSelectItem)</MudButton>
+            <div class="d-flex mb-2">
+                <MudText Typo="Typo.h6" Style="color: #4F4F4F;background-color: #F0F0F0;padding:0px 15px;border-radius: 4px;">@(SheetSelectItem)</MudText>
+                <MudButtonGroup Variant="Variant.Filled"
+                                Color="Color.Primary"
+                                Size="Size.Small"
+                                Class="ml-2">
+                    <MudTooltip Text="重命名" Delay="200">
+                        <MudIconButton Icon="@Icons.Material.Filled.DriveFileRenameOutline" OnClick="RenameSheetAsync"></MudIconButton>
+                    </MudTooltip>
+                    <MudTooltip Text="删除" Delay="200">
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteSheetAsync"></MudIconButton>
+                    </MudTooltip>
+                </MudButtonGroup>
+            </div>
 
-                <MudTooltip Text="重命名" Delay="200">
-                    <MudIconButton Icon="@Icons.Material.Filled.DriveFileRenameOutline" OnClick="RenameSheetAsync"></MudIconButton>
-                </MudTooltip>
-                <MudTooltip Text="删除" Delay="200">
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="DeleteSheetAsync"></MudIconButton>
-                </MudTooltip>
-            </MudButtonGroup>
 
             <NumberExpression ExpressionSelected="OnExpressionSelected"></NumberExpression>
 
@@ -53,7 +57,7 @@
 
             <div class="d-flex flex-grow-1 gap-4">
                 <MudPaper Width="270px" Elevation="0" Class="flex-column">
-                    <MudText Typo="Typo.subtitle1">已选题型</MudText>
+                    <MudText Typo="Typo.subtitle2">已选题型</MudText>
                     @if (Expressions == null || Expressions.Count == 0)
                     {
                         <MudChip T="string" Label="true" Disabled="true">列表是空的</MudChip>
@@ -78,7 +82,7 @@
                 </MudPaper>
 
                 <MudPaper Class="flex-grow-1 ml-5" Elevation="0">
-                    <ExportSetting></ExportSetting>                  
+                    <ExportSetting></ExportSetting>
                 </MudPaper>
             </div>
         }

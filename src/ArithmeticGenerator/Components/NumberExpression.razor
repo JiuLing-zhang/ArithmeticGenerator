@@ -6,7 +6,7 @@
     }
 
     .custom-striped {
-        background: repeating-linear-gradient( 45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px );
+        background: repeating-linear-gradient( 45deg, #009688, #009688 10px, #00675B 10px, #00675B 20px );
         color: white !important;
     }
 </style>
@@ -27,14 +27,14 @@
 <NumberSelector NumberChanged="@OnNumber2Changed"></NumberSelector>
 
 <div class="d-flex align-center mt-2">
-    <MudChip T="string" Color="Color.Success">@(_numberValue)</MudChip>
+    <MudText Typo="Typo.subtitle2">结果约束</MudText>
     <MudChipSet @bind-SelectedValues="ResultRules"
                 T="ResultRuleEnum"
                 Class="ml-2"
                 SelectionMode="SelectionMode.MultiSelection"
                 CheckMark="true"
-                Variant="Variant.Text"
-                Color="Color.Info">
+                Variant="Variant.Filled"
+                Color="Color.Primary">
         @if (Operator == OperatorEnum.Subtract)
         {
             <MudChip Value="@(ResultRuleEnum.GreaterThanZero)" Text="@(ResultRuleEnum.GreaterThanZero.GetDescription())" />
@@ -50,15 +50,15 @@
         }
     </MudChipSet>
 
-
-    <MudButton Variant="Variant.Filled"
-               StartIcon="@Icons.Material.Filled.Save"
-               Color="Color.Success"
-               Size="Size.Small"
-               Class="ml-4"
-               OnClick="AddNumberExpression">添加题型</MudButton>
-
+    <MudChip T="string" Class="ml-8" Color="Color.Primary" Disabled="true">@($"示例：{_numberValue}")</MudChip>
 </div>
+
+<MudButton Variant="Variant.Filled"
+           StartIcon="@Icons.Material.Filled.Save"
+           Color="Color.Primary"
+           Size="Size.Small"
+           Class="mt-4"
+           OnClick="AddNumberExpression">添加题型</MudButton>
 
 @code {
     private const string ToggleStyle = "custom-striped";
