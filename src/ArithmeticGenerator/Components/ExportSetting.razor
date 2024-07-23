@@ -2,24 +2,45 @@
 <MudText Typo="Typo.subtitle1">导出设置</MudText>
 
 <MudNumericField @bind-Value="IntValue" Label="题目个数" Variant="Variant.Text" Min="1" Max="500" />
-
-<MudToggleGroup T="string" Class="mt-2" Style="width: 100%">
+<MudToggleGroup @bind-Value="_topicRule"
+                T="TopicRuleEnum"
+                Class="mt-1"
+                Style="width: 100%"
+                Size="Size.Small"
+                CheckMark
+                FixedContent>
     <MudTooltip Text="题型1，题型2，题型3，题型1，题型2，题型3">
-        <MudToggleItem Value="@("每个题型轮询")" />
+        <MudToggleItem Value="@(TopicRuleEnum.EachQuestion)" Text="@(TopicRuleEnum.EachQuestion.GetDescription())" />
     </MudTooltip>
     <MudTooltip Text="题型1，题型1，题型2，题型2，题型3，题型3">
-        <MudToggleItem Value="@("每类题型轮询")" />
+        <MudToggleItem Value="@(TopicRuleEnum.EachType)" Text="@(TopicRuleEnum.EachType.GetDescription())" />
     </MudTooltip>
     <MudTooltip Text="顺序随机，但是每个题型个数相同">
-        <MudToggleItem Value="@("随机但均分题型")" />
+        <MudToggleItem Value="@(TopicRuleEnum.RandomButEvenly)" Text="@(TopicRuleEnum.RandomButEvenly.GetDescription())" />
     </MudTooltip>
     <MudTooltip Text="有概率会导致某一题型的题目数量为0">
-        <MudToggleItem Value="@("完全随机")" />
+        <MudToggleItem Value="@(TopicRuleEnum.Random)" Text="@(TopicRuleEnum.Random.GetDescription())" />
     </MudTooltip>
 </MudToggleGroup>
 
+<MudText Typo="Typo.body2" Class="mt-2">导出方式</MudText>
+<MudToggleGroup @bind-Value="_fileType"
+                T="FileTypeEnum"
+                Class="mt-2"
+                SelectionMode="SelectionMode.SingleSelection"
+                Color="Color.Primary"
+                Size="Size.Small"
+                CheckMark
+                FixedContent>
+    <MudToggleItem Value="@(FileTypeEnum.CSV)" Text="@(FileTypeEnum.CSV.ToString())" />
+</MudToggleGroup>
+
+
+<MudButton Variant="Variant.Filled" Class="mt-8" Color="Color.Primary" FullWidth="true">导出</MudButton>
 @code {
     public int IntValue { get; set; } = 100;
+    private TopicRuleEnum _topicRule = TopicRuleEnum.RandomButEvenly;
+    private FileTypeEnum _fileType = FileTypeEnum.CSV;
 
     [Parameter]
     public EventCallback<string> SettingChanged { get; set; }
