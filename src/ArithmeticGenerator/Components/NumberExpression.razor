@@ -1,4 +1,5 @@
 ﻿@using ArithmeticGenerator.Models
+@using ArithmeticGenerator.QuestionBuilder
 
 <style>
     .my-custom-class {
@@ -94,6 +95,9 @@
     [Parameter]
     public EventCallback<DisplayExpression> ExpressionSelected { get; set; }
 
+    [Inject]
+    private QuestionFactory QuestionFactory { get; set; } = default!;
+
     protected override void OnInitialized()
     {
         Operator = OperatorEnum.Add;
@@ -113,29 +117,11 @@
 
     private void CreateNumberExpression()
     {
-        string number1Value = "";
-        if (_number1 != null)
+        _numberValue = "";
+        if (_number1 != null && _number2 != null)
         {
-            number1Value = CreateNumberValue(_number1);
+            _numberValue = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_resultRule);
         }
-        string number2Value = "";
-        if (_number2 != null)
-        {
-            number2Value = CreateNumberValue(_number2);
-        }
-        _numberValue = $"{number1Value} {Operator.GetDescription()} {number2Value} = ?";
-    }
-
-    private string CreateNumberValue(CustomNumber number)
-    {
-        var value1 = JiuLing.CommonLibs.RandomUtils.GetOneByLength(number.Part1Length);
-
-        if (number.Part2Length == 0)
-        {
-            return value1;
-        }
-        var value2 = JiuLing.CommonLibs.RandomUtils.GetOneByLength(number.Part2Length);
-        return $"{value1}.{value2}";
     }
 
     public static ResultRuleEnum CombineRules(IReadOnlyCollection<ResultRuleEnum> rules)

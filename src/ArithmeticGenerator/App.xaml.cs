@@ -5,6 +5,7 @@ using MudBlazor.Services;
 using System.Windows;
 using Application = System.Windows.Application;
 using System.Text.Json;
+using ArithmeticGenerator.QuestionBuilder;
 
 namespace ArithmeticGenerator;
 /// <summary>
@@ -45,6 +46,7 @@ public partial class App : Application
         services.AddSingleton(LogManager.GetLogger());
         services.AddSingleton<UpdateHelper>();
         services.AddSingleton<WindowMain>();
+        services.AddSingleton<QuestionFactory>();
         services.AddSingleton<IWindowMoving, WindowMoving>();
         services.AddSingleton<IWindowTitleBar, WindowTitleBar>();
         services.AddLocalization();
