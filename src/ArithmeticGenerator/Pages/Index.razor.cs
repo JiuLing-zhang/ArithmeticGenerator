@@ -49,7 +49,7 @@ public partial class Index
         }
     }
 
-    private List<CustomExpression>? Expressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions?.OrderBy(x => x.DisplayName).ToList();
+    private List<DisplayExpression>? Expressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions?.OrderBy(x => x.DisplayName).ToList();
 
     protected override async Task OnInitializedAsync()
     {
@@ -189,7 +189,7 @@ public partial class Index
         SettingWriter.SaveQuestionConfig(QuestionConfig);
     }
 
-    private void OnExpressionSelected(CustomExpression expression)
+    private void OnExpressionSelected(DisplayExpression expression)
     {
         if (QuestionConfig.Sheets == null)
         {
@@ -199,7 +199,7 @@ public partial class Index
 
         if (QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions == null)
         {
-            QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions = new List<CustomExpression>();
+            QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions = new List<DisplayExpression>();
         }
         else
         {

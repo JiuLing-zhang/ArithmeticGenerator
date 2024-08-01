@@ -92,7 +92,7 @@
 
 
     [Parameter]
-    public EventCallback<CustomExpression> ExpressionSelected { get; set; }
+    public EventCallback<DisplayExpression> ExpressionSelected { get; set; }
 
     protected override void OnInitialized()
     {
@@ -154,6 +154,6 @@
         {
             return;
         }
-        await ExpressionSelected.InvokeAsync(new CustomExpression(_number1, Operator, _number2, _resultRule));
+        await ExpressionSelected.InvokeAsync(new DisplayExpression(_number1, Operator, _number2, _resultRule));
     }
 }
