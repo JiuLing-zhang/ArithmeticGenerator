@@ -30,21 +30,22 @@ internal class QuestionExport
     {
         var questions = new List<string>();
         var random = new Random();
+        int totalExpressions = expressions.Count;
 
         switch (config.TopicRule)
         {
             case TopicRuleEnum.EachQuestion:
                 for (int i = 0; i < config.QuestionCount; i++)
                 {
-                    var expression = expressions[i % expressions.Count];
+                    var expression = expressions[i % totalExpressions];
                     var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
                     questions.Add(question);
                 }
                 break;
             case TopicRuleEnum.EachType:
-                for (int i = 0; i < expressions.Count; i++)
+                for (int i = 0; i < totalExpressions; i++)
                 {
-                    for (int j = 0; j < config.QuestionCount / expressions.Count; j++)
+                    for (int j = 0; j < config.QuestionCount / totalExpressions; j++)
                     {
                         var expression = expressions[i];
                         var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
@@ -53,14 +54,17 @@ internal class QuestionExport
                 }
                 break;
             case TopicRuleEnum.RandomButEvenly:
-                var counts = new int[expressions.Count];
+                var baseCount = config.QuestionCount / totalExpressions;
+                var extraCount = config.QuestionCount % totalExpressions;
+                var counts = new int[totalExpressions];
+
                 for (int i = 0; i < config.QuestionCount; i++)
                 {
                     int index;
                     do
                     {
-                        index = random.Next(expressions.Count);
-                    } while (counts[index] >= config.QuestionCount / expressions.Count);
+                        index = random.Next(totalExpressions);
+                    } while (counts[index] >= baseCount + (index < extraCount ? 1 : 0));
                     counts[index]++;
 
                     var expression = expressions[index];
@@ -71,7 +75,7 @@ internal class QuestionExport
             case TopicRuleEnum.Random:
                 for (int i = 0; i < config.QuestionCount; i++)
                 {
-                    var expression = expressions[random.Next(expressions.Count)];
+                    var expression = expressions[random.Next(totalExpressions)];
                     var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
                     questions.Add(question);
                 }
@@ -80,6 +84,7 @@ internal class QuestionExport
 
         return questions;
     }
+
 
     private void ExportToCsv(string fileName, List<string> questions, ExportConfig config)
     {
