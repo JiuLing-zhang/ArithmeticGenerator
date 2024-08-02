@@ -3,15 +3,8 @@ using ArithmeticGenerator.Enums;
 using ArithmeticGenerator.Models;
 
 namespace ArithmeticGenerator.QuestionBuilder;
-internal class QuestionExport
+internal class QuestionExport(QuestionFactory questionFactory)
 {
-    private readonly QuestionFactory questionFactory;
-
-    public QuestionExport(QuestionFactory questionFactory)
-    {
-        this.questionFactory = questionFactory;
-    }
-
     public void Export(string fileName, ExportConfig config, List<QuestionExpression> expressions)
     {
         var questions = GenerateQuestions(config, expressions);
