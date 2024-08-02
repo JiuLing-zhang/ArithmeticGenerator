@@ -42,6 +42,6 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
             break;
         }
         while (true);
-        return $"{value1} ÷ {value2} =";
+        return $"{value1} ÷ {value2} = ___";
     }
 }

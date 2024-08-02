@@ -1,30 +1,36 @@
-﻿
+﻿@using ArithmeticGenerator.Models
+
 <MudText Typo="Typo.subtitle2">导出设置</MudText>
 
-<MudNumericField @bind-Value="IntValue" Label="题目个数" Variant="Variant.Text" Min="1" Max="500" />
-<MudToggleGroup @bind-Value="_topicRule"
+<div class="d-flex align-end">
+    <MudNumericField @bind-Value="_exportConfig.QuestionCount" Label="题目总数" Variant="Variant.Text" Min="1" Max="500" />
+    <MudNumericField @bind-Value="_exportConfig.QuestionsPerRow" Class="mx-2" Label="每行题目数量" Variant="Variant.Text" Min="1" Max="20" />
+    <MudSwitch @bind-Value="_exportConfig.IncludeSeq" Label="包含序号" Color="Color.Primary" />
+</div>
+
+<MudToggleGroup @bind-Value="_exportConfig.TopicRule"
                 T="TopicRuleEnum"
-                Class="mt-1"
+                Class="mt-2"
                 Style="width: 100%"
                 Size="Size.Small"
                 CheckMark
                 FixedContent>
-    <MudTooltip Text="题型1，题型2，题型3，题型1，题型2，题型3">
+    <MudTooltip Text="题型1，题型2，题型3，题型1，题型2，题型3" Placement="Placement.Top">
         <MudToggleItem Value="@(TopicRuleEnum.EachQuestion)" Text="@(TopicRuleEnum.EachQuestion.GetDescription())" />
     </MudTooltip>
-    <MudTooltip Text="题型1，题型1，题型2，题型2，题型3，题型3">
+    <MudTooltip Text="题型1，题型1，题型2，题型2，题型3，题型3" Placement="Placement.Top">
         <MudToggleItem Value="@(TopicRuleEnum.EachType)" Text="@(TopicRuleEnum.EachType.GetDescription())" />
     </MudTooltip>
-    <MudTooltip Text="顺序随机，但是每个题型个数相同">
+    <MudTooltip Text="顺序随机，但是每个题型个数相同" Placement="Placement.Top">
         <MudToggleItem Value="@(TopicRuleEnum.RandomButEvenly)" Text="@(TopicRuleEnum.RandomButEvenly.GetDescription())" />
     </MudTooltip>
-    <MudTooltip Text="有概率会导致某一题型的题目数量为0">
+    <MudTooltip Text="有概率会导致某一题型的题目数量为0" Placement="Placement.Top">
         <MudToggleItem Value="@(TopicRuleEnum.Random)" Text="@(TopicRuleEnum.Random.GetDescription())" />
     </MudTooltip>
 </MudToggleGroup>
 
 <MudText Typo="Typo.subtitle2" Class="mt-2">导出方式</MudText>
-<MudToggleGroup @bind-Value="_fileType"
+<MudToggleGroup @bind-Value="_exportConfig.FileType"
                 T="FileTypeEnum"
                 Class="mt-2"
                 SelectionMode="SelectionMode.SingleSelection"
@@ -36,12 +42,23 @@
 </MudToggleGroup>
 
 
-<MudButton Variant="Variant.Filled" Class="mt-8" Color="Color.Primary" FullWidth="true">导出</MudButton>
+<MudButton Variant="Variant.Filled" Class="mt-8" Color="Color.Primary" FullWidth="true" OnClick="ExportClicked">导出</MudButton>
 @code {
-    public int IntValue { get; set; } = 100;
-    private TopicRuleEnum _topicRule = TopicRuleEnum.RandomButEvenly;
-    private FileTypeEnum _fileType = FileTypeEnum.CSV;
+
+    private readonly ExportConfig _exportConfig = new()
+        {
+            QuestionCount = 100,
+            QuestionsPerRow = 3,
+            IncludeSeq = true,
+            TopicRule = TopicRuleEnum.RandomButEvenly,
+            FileType = FileTypeEnum.CSV
+        };
 
     [Parameter]
-    public EventCallback<string> SettingChanged { get; set; }
+    public EventCallback<ExportConfig> Export { get; set; }
+
+    private async Task ExportClicked()
+    {
+        await Export.InvokeAsync(_exportConfig);
+    }
 }

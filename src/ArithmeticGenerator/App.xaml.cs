@@ -47,6 +47,7 @@ public partial class App : Application
         services.AddSingleton<UpdateHelper>();
         services.AddSingleton<WindowMain>();
         services.AddSingleton<QuestionFactory>();
+        services.AddSingleton<QuestionExport>();
         services.AddSingleton<IWindowMoving, WindowMoving>();
         services.AddSingleton<IWindowTitleBar, WindowTitleBar>();
         services.AddLocalization();

@@ -33,6 +33,6 @@ internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : Ma
             value1 = CreateNumberValue(Number1);
             value2 = CreateNumberValue(Number2);
         }
-        return $"{value1} - {value2} =";
+        return $"{value1} - {value2} = ___";
     }
 }

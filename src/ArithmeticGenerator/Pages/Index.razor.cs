@@ -1,4 +1,6 @@
 ﻿using ArithmeticGenerator.Models;
+using ArithmeticGenerator.QuestionBuilder;
+using System.IO;
 
 namespace ArithmeticGenerator.Pages;
 public partial class Index
@@ -7,6 +9,9 @@ public partial class Index
     private AppSettings AppSettings { get; set; } = default!;
     [Inject]
     private QuestionConfig QuestionConfig { get; set; } = default!;
+
+    [Inject]
+    private QuestionExport QuestionExport { get; set; } = default!;
 
     [Inject]
     private SettingWriter SettingWriter { get; set; } = default!;
@@ -229,5 +234,23 @@ public partial class Index
 
         QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions.RemoveAll(x => x.Key == chip.Value);
         SettingWriter.SaveQuestionConfig(QuestionConfig);
+    }
+
+    private Task OnExport(ExportConfig exportConfig)
+    {
+        if (Expressions == null)
+        {
+            Snackbar.Add("导出失败，未能加载题型库", Severity.Error);
+            return Task.CompletedTask;
+        }
+        var questionExpressions = new List<QuestionExpression>();
+        foreach (var expression in Expressions)
+        {
+            questionExpressions.Add(new QuestionExpression(expression.Number1, expression.Operator, expression.Number2, expression.ResultRule));
+        }
+        var fileName = Path.Combine(System.Environment.CurrentDirectory, "ArithmeticGeneratorTest.csv");
+        QuestionExport.Export(fileName, exportConfig, questionExpressions);
+        Snackbar.Add("导出成功", Severity.Success);
+        return Task.CompletedTask;
     }
 }
