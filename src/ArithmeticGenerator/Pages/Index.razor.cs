@@ -250,7 +250,7 @@ public partial class Index
         }
         var fileName = Path.Combine(System.Environment.CurrentDirectory, "ArithmeticGeneratorTest.csv");
         QuestionExport.Export(fileName, exportConfig, questionExpressions);
-        Snackbar.Add("导出成功", Severity.Success);
+        Snackbar.Add($"导出成功:{fileName}", Severity.Success);
         return Task.CompletedTask;
     }
 }
