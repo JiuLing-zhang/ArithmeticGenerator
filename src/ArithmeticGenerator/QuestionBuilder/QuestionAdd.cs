@@ -14,6 +14,6 @@ internal class QuestionAdd(CustomNumber number1, CustomNumber number2) : MathQue
     {
         var value1 = CreateNumberValue(Number1);
         var value2 = CreateNumberValue(Number2);
-        return $"{value1} + {value2} = ___";
+        return $"{value1} ＋ {value2} = ___";
     }
 }
