@@ -1,6 +1,8 @@
 ﻿using ArithmeticGenerator.Models;
 using ArithmeticGenerator.QuestionBuilder;
+using System.Diagnostics;
 using System.IO;
+using ArithmeticGenerator.Enums;
 
 namespace ArithmeticGenerator.Pages;
 public partial class Index
@@ -248,9 +250,34 @@ public partial class Index
         {
             questionExpressions.Add(new QuestionExpression(expression.Number1, expression.Operator, expression.Number2, expression.ResultRule));
         }
-        var fileName = Path.Combine(System.Environment.CurrentDirectory, "ArithmeticGeneratorTest.csv");
+        var fileExt = exportConfig.FileType.ToString().ToLower();
+        var fileName = $"ArithmeticGenerator_{DateTime.Now:yyyyMMdd_HHmmss}.{fileExt}";
+        fileName = Path.Combine(System.Environment.CurrentDirectory, fileName);
         QuestionExport.Export(fileName, exportConfig, questionExpressions);
-        Snackbar.Add($"导出成功:{fileName}", Severity.Success);
+        Snackbar.Add($"导出成功:{fileName}", Severity.Success, config =>
+        {
+            config.Action = "打开";
+            config.ActionColor = MudBlazor.Color.Primary;
+            config.Onclick = _ =>
+            {
+                OpenFile(exportConfig.FileType, fileName);
+                return Task.CompletedTask;
+            };
+        });
+
         return Task.CompletedTask;
+    }
+
+    public void OpenFile(FileTypeEnum fileType, string fileName)
+    {
+        switch (fileType)
+        {
+            case FileTypeEnum.CSV:
+            case FileTypeEnum.TXT:
+                Process.Start("notepad", fileName);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+        }
     }
 }
