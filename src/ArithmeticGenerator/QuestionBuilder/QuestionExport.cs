@@ -11,8 +11,12 @@ internal class QuestionExport(QuestionFactory questionFactory)
 
         switch (config.FileType)
         {
+
             case FileTypeEnum.CSV:
                 ExportToCsv(fileName, questions, config);
+                break;
+            case FileTypeEnum.TXT:
+                ExportToTxt(fileName, questions, config);
                 break;
             default:
                 throw new NotSupportedException($"暂时不支持 {config.FileType} 类型的导出");
@@ -106,5 +110,33 @@ internal class QuestionExport(QuestionFactory questionFactory)
         }
 
         return string.Join(Environment.NewLine, csvLines);
+    }
+
+    private void ExportToTxt(string fileName, List<string> questions, ExportConfig config)
+    {
+        var txtContent = BuildTxtContent(questions, config);
+        File.WriteAllText(fileName, txtContent, System.Text.Encoding.UTF8); // 使用UTF-8编码写入文件
+    }
+    private string BuildTxtContent(List<string> questions, ExportConfig config)
+    {
+        var txtLines = new List<string>();
+
+        for (int i = 0; i < questions.Count; i += config.QuestionsPerRow)
+        {
+            var row = new List<string>();
+
+            for (int j = 0; j < config.QuestionsPerRow && i + j < questions.Count; j++)
+            {
+                if (config.IncludeSeq)
+                {
+                    row.Add($"({i + j + 1})"); // 使用括号包围序号
+                }
+                row.Add(questions[i + j]);
+            }
+
+            txtLines.Add(string.Join("\t", row)); // 使用制表符分隔
+        }
+
+        return string.Join(Environment.NewLine, txtLines);
     }
 }
