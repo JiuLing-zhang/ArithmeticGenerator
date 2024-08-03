@@ -270,14 +270,6 @@ public partial class Index
 
     public void OpenFile(FileTypeEnum fileType, string fileName)
     {
-        switch (fileType)
-        {
-            case FileTypeEnum.CSV:
-            case FileTypeEnum.TXT:
-                Process.Start("notepad", fileName);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
-        }
+        Process.Start(new ProcessStartInfo(fileName) { UseShellExecute = true });
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using ArithmeticGenerator.Enums;
 using ArithmeticGenerator.Models;
+using NPOI.HSSF.UserModel;
 
 namespace ArithmeticGenerator.QuestionBuilder;
 internal class QuestionExport(QuestionFactory questionFactory)
@@ -17,6 +18,9 @@ internal class QuestionExport(QuestionFactory questionFactory)
                 break;
             case FileTypeEnum.TXT:
                 ExportToTxt(fileName, questions, config);
+                break;
+            case FileTypeEnum.XLS:
+                ExportToXls(fileName, questions, config);
                 break;
             default:
                 throw new NotSupportedException($"暂时不支持 {config.FileType} 类型的导出");
@@ -138,5 +142,34 @@ internal class QuestionExport(QuestionFactory questionFactory)
         }
 
         return string.Join(Environment.NewLine, txtLines);
+    }
+
+    private void ExportToXls(string fileName, List<string> questions, ExportConfig config)
+    {
+        var workbook = new HSSFWorkbook();
+        var sheet = workbook.CreateSheet("Sheet1");
+
+        int rowNumber = 0;
+        for (int i = 0; i < questions.Count; i += config.QuestionsPerRow)
+        {
+            var row = sheet.CreateRow(rowNumber++);
+            int cellNumber = 0;
+
+            for (int j = 0; j < config.QuestionsPerRow && i + j < questions.Count; j++)
+            {
+                if (config.IncludeSeq)
+                {
+                    var cell = row.CreateCell(cellNumber++);
+                    cell.SetCellValue($"({i + j + 1})");
+                }
+                var questionCell = row.CreateCell(cellNumber++);
+                questionCell.SetCellValue(questions[i + j]);
+            }
+        }
+
+        using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+        {
+            workbook.Write(fs);
+        }
     }
 }

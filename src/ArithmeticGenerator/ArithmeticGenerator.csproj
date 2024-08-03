@@ -21,6 +21,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.70" />
 		<PackageReference Include="ModernWpfUI" Version="0.9.6" />
 		<PackageReference Include="MudBlazor" Version="7.3.0" />
+		<PackageReference Include="NPOI" Version="2.7.1" />
 	</ItemGroup>
 
 	<ItemGroup>

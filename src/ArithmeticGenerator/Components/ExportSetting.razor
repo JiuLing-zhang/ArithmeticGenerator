@@ -38,8 +38,9 @@
                 Size="Size.Small"
                 CheckMark
                 FixedContent>
-    <MudToggleItem Value="@(FileTypeEnum.TXT)" Text="@(FileTypeEnum.TXT.ToString())" />
-    <MudToggleItem Value="@(FileTypeEnum.CSV)" Text="@(FileTypeEnum.CSV.ToString())" />
+    <MudToggleItem Value="@(FileTypeEnum.TXT)" Text="@(FileTypeEnum.TXT.GetDescription())" />
+    <MudToggleItem Value="@(FileTypeEnum.CSV)" Text="@(FileTypeEnum.CSV.GetDescription())" />
+    <MudToggleItem Value="@(FileTypeEnum.XLS)" Text="@(FileTypeEnum.XLS.GetDescription())" />
 </MudToggleGroup>
 
 
