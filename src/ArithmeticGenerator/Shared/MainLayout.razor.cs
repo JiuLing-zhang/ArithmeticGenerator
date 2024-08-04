@@ -4,6 +4,7 @@ public partial class MainLayout
     private bool _isDarkMode;
     private MudThemeProvider _mudThemeProvider = default!;
     private MudTheme _customTheme = default!;
+    private string _version = "";
 
     [Inject]
     private IWindowMoving WindowMoving { get; set; } = default!;
@@ -16,9 +17,16 @@ public partial class MainLayout
 
     [Inject]
     private IDialogService Dialog { get; set; } = default!;
+
+    [Inject]
+    private UpdateHelper UpdateHelper { get; set; } = default!;
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+
+        _version = $"v {AppBase.Version[..AppBase.Version.LastIndexOf('.')]}";
+
         _customTheme = new MudTheme()
         {
             PaletteLight = new PaletteLight()
@@ -108,5 +116,14 @@ public partial class MainLayout
             CloseOnEscapeKey = false,
         };
         await Dialog.ShowAsync<Pay>("", noHeader);
+    }
+
+    private void SaveSettings()
+    {
+        SettingWriter.SaveAppSetting(AppSettings);
+    }
+    private async Task CheckUpdateAsync()
+    {
+        await UpdateHelper.DoAsync(false);
     }
 }

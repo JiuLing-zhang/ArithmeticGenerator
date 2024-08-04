@@ -26,13 +26,35 @@
     <MudAppBar Class="px-0" Elevation="25" Dense="true" @onmouseup="MouseUp" @onmousedown="MouseDown">
 
         <div class="d-flex align-center" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
-            <div class="app-icon"></div>
-            <MudText Typo="Typo.subtitle1" Class="ml-1 mt-1 cursor-default">口算出题工具</MudText>
+            <MudImage Src="icon.ico" Width="18" Height="18" Elevation="25" />
+            <MudText Typo="Typo.subtitle1" Class="ml-1 cursor-default">口算出题工具</MudText>
+            <div class="d-flex align-center ml-3">
+                <MudTooltip Text="检查更新" Delay="300">
+                    <MudButton Variant="Variant.Text"
+                               Color="Color.Primary"
+                               Size="Size.Small"
+                               OnClick="CheckUpdateAsync">@(_version)</MudButton>
+                </MudTooltip>
+                <MudCheckBox @bind-Value="@(AppSettings.IsAutoCheckUpdate)"
+                             @bind-Value:after="SaveSettings"
+                             Label="@("自动更新")"
+                             Size="Size.Small"
+                             Dense="true"
+                             Color="Color.Primary" />
+            </div>
         </div>
 
         <MudSpacer />
 
         <div class="d-flex" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
+
+            <MudTooltip Text="GitHub" Delay="300">
+                <MudIconButton Href="@(Resources.Resource.GitHubUrl)"
+                               Target="_blank"
+                               Size="Size.Medium"
+                               Icon="@Icons.Custom.Brands.GitHub" />
+            </MudTooltip>
+
             <MudTooltip Text="打赏" Delay="300">
                 <MudIconButton Icon="@Icons.Material.Filled.Coffee"
                                Size="Size.Medium"

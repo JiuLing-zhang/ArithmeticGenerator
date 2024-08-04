@@ -9,11 +9,3 @@ body,
 ::-webkit-scrollbar {
     display: none;
 }
-
-.app-icon {
-    width: 20px;
-    height: 20px;
-    background-position: center center;
-    background-size: cover;
-    background-image: url("icon.ico");
-}
