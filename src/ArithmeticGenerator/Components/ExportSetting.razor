@@ -50,10 +50,10 @@
     private readonly ExportConfig _exportConfig = new()
         {
             QuestionCount = 100,
-            QuestionsPerRow = 3,
+            QuestionsPerRow = 4,
             IncludeSeq = true,
-            TopicRule = TopicRuleEnum.RandomButEvenly,
-            FileType = FileTypeEnum.CSV
+            TopicRule = TopicRuleEnum.Random,
+            FileType = FileTypeEnum.XLSX
         };
 
     [Parameter]
