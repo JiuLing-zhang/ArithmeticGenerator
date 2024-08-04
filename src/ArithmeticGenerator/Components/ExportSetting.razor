@@ -41,8 +41,8 @@
     <MudToggleItem Value="@(FileTypeEnum.TXT)" Text="@(FileTypeEnum.TXT.GetDescription())" />
     <MudToggleItem Value="@(FileTypeEnum.CSV)" Text="@(FileTypeEnum.CSV.GetDescription())" />
     <MudToggleItem Value="@(FileTypeEnum.XLS)" Text="@(FileTypeEnum.XLS.GetDescription())" />
+    <MudToggleItem Value="@(FileTypeEnum.XLSX)" Text="@(FileTypeEnum.XLSX.GetDescription())" />
 </MudToggleGroup>
-
 
 <MudButton Variant="Variant.Filled" Class="mt-8" Color="Color.Primary" FullWidth="true" OnClick="ExportClicked">导出</MudButton>
 @code {
