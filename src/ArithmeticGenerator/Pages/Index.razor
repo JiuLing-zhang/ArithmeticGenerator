@@ -82,7 +82,10 @@
                 </MudPaper>
 
                 <MudPaper Class="flex-grow-1 ml-5" Elevation="0">
-                    <ExportSetting Export="OnExport"></ExportSetting>
+                    @if (Expressions != null && Expressions.Count > 0)
+                    {
+                        <ExportSetting Export="OnExport"></ExportSetting>
+                    }
                 </MudPaper>
             </div>
         }
