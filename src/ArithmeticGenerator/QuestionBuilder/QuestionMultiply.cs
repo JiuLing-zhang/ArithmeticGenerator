@@ -14,7 +14,7 @@ internal class QuestionMultiply(CustomNumber number1, CustomNumber number2) : Ma
         decimal value1;
         decimal value2;
 
-        if ((resultRule & ResultRuleEnum.IsNotOne) == ResultRuleEnum.IsNotOne)
+        if ((resultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
         {
             do
             {

@@ -19,7 +19,7 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
             value1 = CreateNumberValue(Number1);
             value2 = CreateNumberValue(Number2);
 
-            if ((resultRule & ResultRuleEnum.IsNotOne) == ResultRuleEnum.IsNotOne)
+            if ((resultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
             {
                 if (value2 == 1)
                 {
@@ -39,15 +39,27 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
                     return "不存在这样的等式！";
                 }
 
-                int integerPartDigits;
-                int fractionalPartDigits;
-                do
+                int result;
+                // 如果位数相同，随机数小一点，更容易生成题目
+                result = rand.Next(1, number1.Part1Length == Number2.Part1Length ? 4 : 10);
+
+                value1 = value2 * result;
+                var (integerPartDigits, fractionalPartDigits) = GetDecimalDigits(value1);
+
+                if ((integerPartDigits != Number1.Part1Length || fractionalPartDigits != Number1.Part2Length))
                 {
-                    var value = rand.Next(1, 10);
-                    value1 = value2 * value;
-                    (integerPartDigits, fractionalPartDigits) = GetDecimalDigits(value1);
-                } while (integerPartDigits != Number1.Part1Length || fractionalPartDigits != Number1.Part2Length);
+                    continue;
+                }
             }
+
+            if ((resultRule & ResultRuleEnum.ResultIsNotOne) == ResultRuleEnum.ResultIsNotOne)
+            {
+                if (value2 == value1)
+                {
+                    continue;
+                }
+            }
+
             break;
         }
         while (true);

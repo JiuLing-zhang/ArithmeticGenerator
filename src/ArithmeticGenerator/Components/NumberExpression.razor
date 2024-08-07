@@ -42,12 +42,13 @@
         }
         @if (Operator == OperatorEnum.Multiply)
         {
-            <MudChip Value="@(ResultRuleEnum.IsNotOne)" Text="@(ResultRuleEnum.IsNotOne.GetDescription())" />
+            <MudChip Value="@(ResultRuleEnum.ValueIsNotOne)" Text="@(ResultRuleEnum.ValueIsNotOne.GetDescription())" />
         }
         @if (Operator == OperatorEnum.Divide)
         {
             <MudChip Value="@(ResultRuleEnum.IsInt)" Text="@(ResultRuleEnum.IsInt.GetDescription())" />
-            <MudChip Value="@(ResultRuleEnum.IsNotOne)" Text="@(ResultRuleEnum.IsNotOne.GetDescription())" />
+            <MudChip Value="@(ResultRuleEnum.ValueIsNotOne)" Text="@(ResultRuleEnum.ValueIsNotOne.GetDescription())" />
+            <MudChip Value="@(ResultRuleEnum.ResultIsNotOne)" Text="@(ResultRuleEnum.ResultIsNotOne.GetDescription())" />
         }
     </MudChipSet>
 

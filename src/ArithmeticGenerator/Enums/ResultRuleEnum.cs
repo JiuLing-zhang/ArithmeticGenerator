@@ -9,13 +9,13 @@ namespace ArithmeticGenerator.Enums;
 public enum ResultRuleEnum
 {
     /// <summary>
-    /// 大于零
+    /// 结果大于0
     /// </summary>
     [Description("结果大于0")]
     GreaterThanZero = 1,
 
     /// <summary>
-    /// 整数
+    /// 结果可以整除
     /// </summary>
     [Description("结果可以整除")]
     IsInt = 2,
@@ -24,5 +24,11 @@ public enum ResultRuleEnum
     /// 不乘除1
     /// </summary>
     [Description("不乘除1")]
-    IsNotOne = 4
+    ValueIsNotOne = 4,
+
+    /// <summary>
+    /// 结果不等于1
+    /// </summary>
+    [Description("结果不等于1")]
+    ResultIsNotOne = 8
 }
