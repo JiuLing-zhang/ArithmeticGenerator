@@ -157,6 +157,18 @@ internal class QuestionExport(QuestionFactory questionFactory)
     {
         var workbook = new HSSFWorkbook();
         var sheet = workbook.CreateSheet("Sheet1");
+        int numberOfColumns = config.IncludeSeq ? config.QuestionsPerRow * 2 : config.QuestionsPerRow;
+        for (int col = 0; col < numberOfColumns; col++)
+        {
+            if (config.IncludeSeq && col % 2 == 0)
+            {
+                sheet.SetColumnWidth(col, 5 * 256); // 序号列宽度为5个字符
+            }
+            else
+            {
+                sheet.SetColumnWidth(col, 20 * 256); // 表达式列宽度为20个字符
+            }
+        }
 
         int rowNumber = 0;
         for (int i = 0; i < questions.Count; i += config.QuestionsPerRow)
@@ -186,6 +198,18 @@ internal class QuestionExport(QuestionFactory questionFactory)
     {
         var workbook = new XSSFWorkbook();
         var sheet = workbook.CreateSheet("Questions");
+        int numberOfColumns = config.IncludeSeq ? config.QuestionsPerRow * 2 : config.QuestionsPerRow;
+        for (int col = 0; col < numberOfColumns; col++)
+        {
+            if (config.IncludeSeq && col % 2 == 0)
+            {
+                sheet.SetColumnWidth(col, 5 * 256); // 序号列宽度为5个字符
+            }
+            else
+            {
+                sheet.SetColumnWidth(col, 20 * 256); // 表达式列宽度为20个字符
+            }
+        }
 
         int rowNumber = 0;
         for (int i = 0; i < questions.Count; i += config.QuestionsPerRow)
