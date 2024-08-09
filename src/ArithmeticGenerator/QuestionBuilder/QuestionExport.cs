@@ -43,7 +43,7 @@ internal class QuestionExport(QuestionFactory questionFactory)
                 for (int i = 0; i < config.QuestionCount; i++)
                 {
                     var expression = expressions[i % totalExpressions];
-                    var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
+                    var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule, config.ResultUseUnderline);
                     questions.Add(question);
                 }
                 break;
@@ -57,7 +57,7 @@ internal class QuestionExport(QuestionFactory questionFactory)
                     for (int j = 0; j < count; j++)
                     {
                         var expression = expressions[i];
-                        var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
+                        var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule, config.ResultUseUnderline);
                         questions.Add(question);
                     }
                 }
@@ -77,7 +77,7 @@ internal class QuestionExport(QuestionFactory questionFactory)
                     counts[index]++;
 
                     var expression = expressions[index];
-                    var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
+                    var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule, config.ResultUseUnderline);
                     questions.Add(question);
                 }
                 break;
@@ -85,7 +85,7 @@ internal class QuestionExport(QuestionFactory questionFactory)
                 for (int i = 0; i < config.QuestionCount; i++)
                 {
                     var expression = expressions[random.Next(totalExpressions)];
-                    var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule);
+                    var question = questionFactory.Create(expression.Operator, expression.Number1, expression.Number2).GenerateQuestion(expression.ResultRule, config.ResultUseUnderline);
                     questions.Add(question);
                 }
                 break;

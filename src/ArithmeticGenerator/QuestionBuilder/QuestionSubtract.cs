@@ -9,7 +9,7 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Subtract, number1, number2)
 {
-    public override string GenerateQuestion(ResultRuleEnum resultRule)
+    public override string GenerateQuestion(ResultRuleEnum resultRule, bool resultUseUnderline)
     {
         decimal value1;
         decimal value2;
@@ -33,6 +33,6 @@ internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : Ma
             value1 = CreateNumberValue(Number1);
             value2 = CreateNumberValue(Number2);
         }
-        return BuilderQuestion(value1, value2);
+        return BuilderQuestion(value1, value2, resultUseUnderline);
     }
 }

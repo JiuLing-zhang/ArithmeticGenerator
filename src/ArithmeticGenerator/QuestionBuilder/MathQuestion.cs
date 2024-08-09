@@ -6,8 +6,7 @@ internal abstract class MathQuestion(OperatorEnum @operator, CustomNumber number
 {
     public CustomNumber Number1 { get; } = number1;
     public CustomNumber Number2 { get; } = number2;
-    private readonly OperatorEnum _operator = @operator;
-    public abstract string GenerateQuestion(ResultRuleEnum resultRule);
+    public abstract string GenerateQuestion(ResultRuleEnum resultRule, bool resultUseUnderline);
 
     internal decimal CreateNumberValue(CustomNumber number)
     {
@@ -21,9 +20,10 @@ internal abstract class MathQuestion(OperatorEnum @operator, CustomNumber number
         return Convert.ToDecimal($"{value1}.{value2}");
     }
 
-    internal string BuilderQuestion(decimal value1, decimal value2)
+    internal string BuilderQuestion(decimal value1, decimal value2, bool resultUseUnderline)
     {
-        return $"{value1} {_operator.GetDescription()} {value2} = ___";
+        var underline = resultUseUnderline ? "___" : "";
+        return $"{value1} {@operator.GetDescription()} {value2} = {underline}";
     }
 }
 
