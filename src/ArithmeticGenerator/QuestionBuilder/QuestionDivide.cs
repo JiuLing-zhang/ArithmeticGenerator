@@ -7,7 +7,7 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// </summary>
 /// <param name="number1"></param>
 /// <param name="number2"></param>
-internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : MathQuestion(number1, number2)
+internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Divide, number1, number2)
 {
     public override string GenerateQuestion(ResultRuleEnum resultRule)
     {
@@ -63,7 +63,7 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
             break;
         }
         while (true);
-        return $"{value1} ÷ {value2} = ___";
+        return BuilderQuestion(value1, value2);
     }
 
     private (int integerPartDigits, int fractionalPartDigits) GetDecimalDigits(decimal number)

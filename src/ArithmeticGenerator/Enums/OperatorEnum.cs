@@ -10,13 +10,13 @@ public enum OperatorEnum
     /// <summary>
     /// 加
     /// </summary>
-    [Description("+")]
+    [Description("＋")]
     Add,
 
     /// <summary>
     /// 减
     /// </summary>
-    [Description("-")]
+    [Description("－")]
     Subtract,
 
     /// <summary>
