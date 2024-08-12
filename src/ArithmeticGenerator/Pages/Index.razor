@@ -10,29 +10,31 @@
     }
 </style>
 
-<div class="d-flex flex-grow-1 gap-4">
-    <MudPaper Width="200px" Elevation="0">
-        <MudButton Variant="Variant.Filled"
-                   StartIcon="@Icons.Material.Filled.Add"
-                   FullWidth="true"
-                   Class="mb-3"
-                   Color="Color.Primary"
-                   OnClick="AddSheetAsync">新建题库</MudButton>
-        @if (QuestionConfig.Sheets != null)
-        {
-            <MudDivider />
-            <MudList @bind-SelectedValue="SheetSelectItem"
-                     T="string">
-                @foreach (var sheet in QuestionConfig.Sheets)
-                {
-                    <MudListItem Text="@(sheet.Name)"
-                                 Value="@(sheet.Name)" />
-                }
-            </MudList>
-        }
+<div class="d-flex flex-grow-1 gap-4" style="height: calc(100vh - 70px);">
+    <MudPaper Width="200px" Class="d-flex flex-column justify-space-between" Elevation="1">
+        <MudPaper Elevation="0">
+            <MudButton Variant="Variant.Filled"
+                       StartIcon="@Icons.Material.Filled.Add"
+                       FullWidth="true"
+                       Class="mb-3"
+                       Color="Color.Primary"
+                       OnClick="AddSheetAsync">新建题库</MudButton>
+            @if (QuestionConfig.Sheets != null)
+            {
+                <MudDivider />
+                <MudList @bind-SelectedValue="SheetSelectItem"
+                         T="string">
+                    @foreach (var sheet in QuestionConfig.Sheets)
+                    {
+                        <MudListItem Text="@(sheet.Name)"
+                                     Value="@(sheet.Name)" />
+                    }
+                </MudList>
+            }
+        </MudPaper>
     </MudPaper>
 
-    <MudPaper Class="flex-grow-1" Elevation="0">
+    <MudPaper Class="flex-grow-1" Width="200px" Elevation="0">
         @if (SheetSelectItem.IsNotTrimEmpty())
         {
             <div class="d-flex mb-2">
@@ -58,27 +60,29 @@
             <div class="d-flex flex-grow-1 gap-4">
                 <MudPaper Width="270px" Elevation="0" Class="flex-column">
                     <MudText Typo="Typo.subtitle2">已选题型</MudText>
-                    @if (Expressions == null || Expressions.Count == 0)
-                    {
-                        <MudChip T="string" Label="true" Disabled="true">列表是空的</MudChip>
-                    }
-                    else
-                    {
-                        @foreach (var expression in Expressions)
+                    <div style="max-height: calc(100vh - 360px); overflow-y: auto; overflow-x: hidden;">
+                        @if (Expressions == null || Expressions.Count == 0)
                         {
-                            <MudTooltip Text="@(expression.DisplayDescription)"
-                                        Arrow="true"
-                                        Placement="Placement.Right"
-                                        Color="Color.Primary">
-                                <MudChip T="string"
-                                         Label="true"
-                                         Text="@(expression.DisplayName)"
-                                         Value="@(expression.Key)"
-                                         Style="width:100%"
-                                         OnClose="ExpressionRemove" />
-                            </MudTooltip>
+                            <MudChip T="string" Label="true" Disabled="true">列表是空的</MudChip>
                         }
-                    }
+                        else
+                        {
+                            @foreach (var expression in Expressions)
+                            {
+                                <MudTooltip Text="@(expression.DisplayDescription)"
+                                            Arrow="true"
+                                            Placement="Placement.Right"
+                                            Color="Color.Primary">
+                                    <MudChip T="string"
+                                             Label="true"
+                                             Text="@(expression.DisplayName)"
+                                             Value="@(expression.Key)"
+                                             Style="width:100%"
+                                             OnClose="ExpressionRemove" />
+                                </MudTooltip>
+                            }
+                        }
+                    </div>                    
                 </MudPaper>
 
                 <MudPaper Class="flex-grow-1 ml-5" Elevation="0">
