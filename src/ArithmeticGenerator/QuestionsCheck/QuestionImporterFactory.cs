@@ -13,6 +13,14 @@ public class QuestionImporterFactory
         {
             return new ImageQuestionImporter();
         }
+        else if (fileName.EndsWith(".csv"))
+        {
+            return new CsvQuestionImporter();
+        }
+        else if (fileName.EndsWith(".txt"))
+        {
+            return new TxtQuestionImporter();
+        }
         else
         {
             throw new NotSupportedException("不支持的文件格式");

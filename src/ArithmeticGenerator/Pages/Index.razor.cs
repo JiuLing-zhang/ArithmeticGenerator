@@ -282,7 +282,7 @@ public partial class Index
         var ofd = new OpenFileDialog
         {
             //Filter = "文件类型|*.xls;*.xlsx;*.jpg;*.png;*.bmp|All Files|*.*"
-            Filter = "文件类型|*.xls;*.xlsx"
+            Filter = "文件类型|*.xls;*.xlsx;*.csv;*.txt"
         };
 
         ofd.ShowDialog();
