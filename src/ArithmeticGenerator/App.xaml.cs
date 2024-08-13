@@ -6,6 +6,7 @@ using System.Windows;
 using Application = System.Windows.Application;
 using System.Text.Json;
 using ArithmeticGenerator.QuestionBuilder;
+using ArithmeticGenerator.QuestionsCheck;
 
 namespace ArithmeticGenerator;
 /// <summary>
@@ -48,6 +49,8 @@ public partial class App : Application
         services.AddSingleton<WindowMain>();
         services.AddSingleton<QuestionFactory>();
         services.AddSingleton<QuestionExport>();
+        services.AddSingleton<QuestionImporterFactory>();
+        services.AddSingleton<ExpressionValidator>();
         services.AddSingleton<IWindowMoving, WindowMoving>();
         services.AddSingleton<IWindowTitleBar, WindowTitleBar>();
         services.AddLocalization();

@@ -1,0 +1,82 @@
+﻿@using ArithmeticGenerator.QuestionsCheck
+
+<style>
+
+    .result {
+        border-top: 1px solid #80808080;
+        border-bottom: 1px solid #80808080;
+        border-left: none;
+        border-right: none;
+    }
+
+    .Invalid {
+        width: 50px;
+    }
+
+    .Correct {
+        width: 200px;
+    }
+
+    .Incorrect {
+        width: 200px;
+    }
+</style>
+<MudDialog>
+    <DialogContent>
+        <div class="d-flex justify-space-between align-center">
+            <div class="d-flex align-center">
+                <MudText Typo="Typo.h6">批改作业</MudText>
+                <MudChip T="string" Color="Color.Primary" Class="mx-3" Size="Size.Small">@($"总分 {_Score:f0}")</MudChip>
+                <MudChip T="string" Color="Color.Primary" Size="Size.Small">@($"题目总数 {_total}")</MudChip>
+                <MudChip T="string" Color="Color.Success" Size="Size.Small">@($"答对 {_correctCount}")</MudChip>
+                <MudChip T="string" Color="Color.Error" Size="Size.Small">@($"错题 {_incorrectCount}")</MudChip>
+            </div>
+            <MudIconButton Icon="@Icons.Material.Filled.Close" Size="Size.Small" OnClick="Cancel"></MudIconButton>
+        </div>
+
+        <div class="d-flex flex-column align-content-center justify-center mt-2">
+            @foreach (var questionRow in Questions)
+            {
+                <div class="d-flex">
+                    @foreach (var question in questionRow)
+                    {
+                        var questionResult = ExpressionValidator.Validate(question);
+
+                        <div class="d-flex justify-space-between px-2 py-1 result @questionResult.ToString()">
+                            <span>@question</span>
+                            @switch (questionResult)
+                            {
+                                case QuestionResultEnum.Correct:
+                                    _correctCount++;
+                                    <MudIcon Icon="@Icons.Material.Filled.Check" Color="Color.Success" Size="Size.Small" />
+                                    break;
+                                case QuestionResultEnum.Incorrect:
+                                    _incorrectCount++;
+                                    <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Error" Size="Size.Small" />
+                                    break;
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public List<List<string>> Questions { get; set; }
+
+    [Inject]
+    private ExpressionValidator ExpressionValidator { get; set; } = default!;
+
+    private void Cancel() => MudDialog.Cancel();
+
+    private int _correctCount = 0;
+    private int _incorrectCount = 0;
+    private int _total => _correctCount + _incorrectCount;
+    private decimal _Score => Convert.ToDecimal(100 * _correctCount) / _total;
+}

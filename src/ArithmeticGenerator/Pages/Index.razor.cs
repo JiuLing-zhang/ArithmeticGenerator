@@ -3,6 +3,7 @@ using ArithmeticGenerator.QuestionBuilder;
 using System.Diagnostics;
 using System.IO;
 using ArithmeticGenerator.Enums;
+using ArithmeticGenerator.QuestionsCheck;
 
 namespace ArithmeticGenerator.Pages;
 public partial class Index
@@ -29,6 +30,9 @@ public partial class Index
 
     [Inject]
     private IDialogService DialogService { get; set; } = default!;
+
+    [Inject]
+    private QuestionImporterFactory QuestionImporterFactory { get; set; } = default!;
 
     public string SheetSelectItem
     {
@@ -271,5 +275,35 @@ public partial class Index
     public void OpenFile(FileTypeEnum fileType, string fileName)
     {
         Process.Start(new ProcessStartInfo(fileName) { UseShellExecute = true });
+    }
+
+    private async Task CheckQuestionsAsync()
+    {
+        var ofd = new OpenFileDialog
+        {
+            //Filter = "文件类型|*.xls;*.xlsx;*.jpg;*.png;*.bmp|All Files|*.*"
+            Filter = "文件类型|*.xls;*.xlsx"
+        };
+
+        ofd.ShowDialog();
+        var fileName = ofd.FileName;
+        if (fileName.IsEmpty())
+        {
+            return;
+        }
+
+        var questionImport = QuestionImporterFactory.CreateImporter(fileName);
+        List<List<string>> importedData = questionImport.Import(fileName);
+        var options = new DialogOptions
+        {
+            BackgroundClass = "my-custom-class",
+            MaxWidth = MaxWidth.ExtraLarge,
+            NoHeader = true,
+            FullWidth = true,
+            CloseOnEscapeKey = false
+        };
+        var parameters = new DialogParameters<HomeworkCorrecting> { { x => x.Questions, importedData } };
+
+        await DialogService.ShowAsync<HomeworkCorrecting>("批改作业", parameters, options);
     }
 }

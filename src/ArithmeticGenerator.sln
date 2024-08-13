@@ -20,7 +20,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {84A8F2DF-E6F5-44C7-BCBE-2BC9CE9F3F03}
+		RESX_NeutralResourcesLanguage = zh-Hans
 	EndGlobalSection
 EndGlobal
