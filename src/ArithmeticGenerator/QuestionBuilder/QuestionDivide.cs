@@ -9,7 +9,7 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Divide, number1, number2)
 {
-    public override string GenerateQuestion(ResultRuleEnum resultRule, bool resultUseUnderline)
+    public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
     {
         decimal value1;
         decimal value2;
@@ -19,7 +19,7 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
             value1 = CreateNumberValue(Number1);
             value2 = CreateNumberValue(Number2);
 
-            if ((resultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
+            if ((questionRule.ResultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
             {
                 if (value2 == 1)
                 {
@@ -27,7 +27,7 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
                 }
             }
 
-            if ((resultRule & ResultRuleEnum.IsInt) == ResultRuleEnum.IsInt)
+            if ((questionRule.ResultRule & ResultRuleEnum.IsInt) == ResultRuleEnum.IsInt)
             {
                 if (number1.Part1Length < Number2.Part1Length)
                 {
@@ -52,7 +52,7 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
                 }
             }
 
-            if ((resultRule & ResultRuleEnum.ResultIsNotOne) == ResultRuleEnum.ResultIsNotOne)
+            if ((questionRule.ResultRule & ResultRuleEnum.ResultIsNotOne) == ResultRuleEnum.ResultIsNotOne)
             {
                 if (value2 == value1)
                 {

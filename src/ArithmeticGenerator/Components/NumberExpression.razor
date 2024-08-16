@@ -75,7 +75,7 @@
             CreateNumberExpression();
         }
     }
-    private ResultRuleEnum _resultRule;
+    private QuestionRule _questionRule = new QuestionRule();
     private IReadOnlyCollection<ResultRuleEnum> _resultRules = null!;
     public IReadOnlyCollection<ResultRuleEnum> ResultRules
     {
@@ -83,7 +83,7 @@
         set
         {
             _resultRules = value;
-            _resultRule = CombineRules(_resultRules);
+            _questionRule.ResultRule = CombineRules(_resultRules);
             CreateNumberExpression();
         }
     }
@@ -122,7 +122,7 @@
         _numberValue = "";
         if (_number1 != null && _number2 != null)
         {
-            _numberValue = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_resultRule, true);
+            _numberValue = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_questionRule, true);
         }
     }
 
@@ -142,6 +142,6 @@
         {
             return;
         }
-        await ExpressionSelected.InvokeAsync(new DisplayExpression(_number1, Operator, _number2, _resultRule));
+        await ExpressionSelected.InvokeAsync(new DisplayExpression(_number1, Operator, _number2, _questionRule));
     }
 }

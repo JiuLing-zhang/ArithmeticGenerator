@@ -252,7 +252,7 @@ public partial class Index
         var questionExpressions = new List<QuestionExpression>();
         foreach (var expression in Expressions)
         {
-            questionExpressions.Add(new QuestionExpression(expression.Number1, expression.Operator, expression.Number2, expression.ResultRule));
+            questionExpressions.Add(new QuestionExpression(expression.Number1, expression.Operator, expression.Number2, expression.QuestionRule));
         }
         var fileExt = exportConfig.FileType.ToString().ToLower();
         var fileName = $"ArithmeticGenerator_{DateTime.Now:yyyyMMdd_HHmmss}.{fileExt}";

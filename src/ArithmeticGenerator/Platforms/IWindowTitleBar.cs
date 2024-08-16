@@ -1,5 +1,4 @@
 ﻿namespace ArithmeticGenerator.Platforms;
-//TODO rename
 public interface IWindowTitleBar
 {
     public bool IsMaximized { get; }

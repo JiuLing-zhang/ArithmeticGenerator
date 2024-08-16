@@ -7,13 +7,13 @@ namespace ArithmeticGenerator.Models;
 /// <param name="number1">第一位数</param>
 /// <param name="operator">运算符</param>
 /// <param name="number2">第二位数</param>
-/// <param name="resultRule">结果约束条件</param>
-public class DisplayExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, ResultRuleEnum resultRule) : BaseExpression(number1, @operator, number2, resultRule)
+/// <param name="questionRule">结果约束条件</param>
+public class DisplayExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, QuestionRule questionRule) : BaseExpression(number1, @operator, number2, questionRule)
 {
     /// <summary>
     /// 唯一键值
     /// </summary>
-    public string Key => $"{Number1}_{Operator}_{Number2}_{ResultRule}";
+    public string Key => $"{Number1}_{Operator}_{Number2}_{QuestionRule.ResultRule}";
 
     /// <summary>
     /// 显示名称
@@ -23,7 +23,7 @@ public class DisplayExpression(CustomNumber number1, OperatorEnum @operator, Cus
     /// <summary>
     /// 显示描述
     /// </summary>
-    public string DisplayDescription => CheckResultRuleEnumValues(ResultRule);
+    public string DisplayDescription => CheckResultRuleEnumValues(QuestionRule.ResultRule);
 
     private string CheckResultRuleEnumValues(ResultRuleEnum result)
     {

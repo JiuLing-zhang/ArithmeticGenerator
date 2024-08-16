@@ -9,12 +9,12 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionMultiply(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Multiply, number1, number2)
 {
-    public override string GenerateQuestion(ResultRuleEnum resultRule, bool resultUseUnderline)
+    public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
     {
         decimal value1;
         decimal value2;
 
-        if ((resultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
+        if ((questionRule.ResultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
         {
             do
             {

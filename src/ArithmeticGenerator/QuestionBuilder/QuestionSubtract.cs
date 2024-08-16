@@ -9,12 +9,12 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Subtract, number1, number2)
 {
-    public override string GenerateQuestion(ResultRuleEnum resultRule, bool resultUseUnderline)
+    public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
     {
         decimal value1;
         decimal value2;
 
-        if ((resultRule & ResultRuleEnum.GreaterThanZero) == ResultRuleEnum.GreaterThanZero)
+        if ((questionRule.ResultRule & ResultRuleEnum.GreaterThanZero) == ResultRuleEnum.GreaterThanZero)
         {
             if (number1.Part1Length < Number2.Part1Length)
             {

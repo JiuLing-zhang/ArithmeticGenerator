@@ -3,6 +3,7 @@
 namespace ArithmeticGenerator;
 public class QuestionConfig
 {
+    public string? Version { get; set; }
     public List<SheetConfig>? Sheets { get; set; }
 }
 

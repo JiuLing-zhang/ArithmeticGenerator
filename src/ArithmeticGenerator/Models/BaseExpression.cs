@@ -8,8 +8,8 @@ namespace ArithmeticGenerator.Models;
 /// <param name="number1">第一位数</param>
 /// <param name="operator">运算符</param>
 /// <param name="number2">第二位数</param>
-/// <param name="resultRule">结果约束条件</param>
-public class BaseExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, ResultRuleEnum resultRule)
+/// <param name="questionRule">题目规则</param>
+public class BaseExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, QuestionRule questionRule)
 {
     /// <summary>
     /// 第一位数
@@ -29,6 +29,6 @@ public class BaseExpression(CustomNumber number1, OperatorEnum @operator, Custom
     /// <summary>
     /// 结果约束条件
     /// </summary>
-    public ResultRuleEnum ResultRule { get; set; } = resultRule;
+    public QuestionRule QuestionRule { get; set; } = questionRule;
 
 }

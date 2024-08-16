@@ -6,7 +6,7 @@ internal abstract class MathQuestion(OperatorEnum @operator, CustomNumber number
 {
     public CustomNumber Number1 { get; } = number1;
     public CustomNumber Number2 { get; } = number2;
-    public abstract string GenerateQuestion(ResultRuleEnum resultRule, bool resultUseUnderline);
+    public abstract string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline);
 
     internal decimal CreateNumberValue(CustomNumber number)
     {

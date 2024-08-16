@@ -5,6 +5,7 @@ using MudBlazor.Services;
 using System.Windows;
 using Application = System.Windows.Application;
 using System.Text.Json;
+using ArithmeticGenerator.Models;
 using ArithmeticGenerator.QuestionBuilder;
 using ArithmeticGenerator.QuestionsCheck;
 
@@ -42,7 +43,33 @@ public partial class App : Application
         });
         services.AddSingleton<QuestionConfig>((_) =>
         {
-            return GetConfig<QuestionConfig>(AppBase.QuestionConfigPath);
+            var questionConfig = GetConfig<QuestionConfig>(AppBase.QuestionConfigPath);
+            if (questionConfig.Version == null)
+            {
+                var oldQuestionConfig = GetConfig<OldQuestionConfig>(AppBase.QuestionConfigPath);
+                questionConfig.Version = "2.0";
+                questionConfig.Sheets = new List<SheetConfig>();
+
+                foreach (var oldSheet in oldQuestionConfig.Sheets)
+                {
+                    var sheetConfig = new SheetConfig();
+                    sheetConfig.Name = oldSheet.Name;
+                    sheetConfig.IsActive = oldSheet.IsActive;
+                    sheetConfig.Expressions = new List<DisplayExpression>();
+                    foreach (var oldExpression in oldSheet.Expressions)
+                    {
+                        sheetConfig.Expressions.Add(
+                            new DisplayExpression(
+                                oldExpression.Number1,
+                                oldExpression.Operator,
+                                oldExpression.Number2,
+                                new QuestionRule() { ResultRule = oldExpression.ResultRule })
+                            );
+                    }
+                    questionConfig.Sheets.Add(sheetConfig);
+                }
+            }
+            return questionConfig;
         });
         services.AddSingleton(LogManager.GetLogger());
         services.AddSingleton<UpdateHelper>();

@@ -1,8 +1,6 @@
 ﻿using System.IO;
 
 namespace ArithmeticGenerator;
-
-// TODO rename to SettingWriter
 public class SettingWriter()
 {
     public void SaveAppSetting(AppSettings appSettings)
