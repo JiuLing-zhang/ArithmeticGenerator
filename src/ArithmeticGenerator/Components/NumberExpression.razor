@@ -95,7 +95,7 @@
 
 
     [Parameter]
-    public EventCallback<DisplayExpression> ExpressionSelected { get; set; }
+    public EventCallback<QuestionExpression> ExpressionSelected { get; set; }
 
     [Inject]
     private QuestionFactory QuestionFactory { get; set; } = default!;
@@ -142,6 +142,6 @@
         {
             return;
         }
-        await ExpressionSelected.InvokeAsync(new DisplayExpression(_number1, Operator, _number2, _questionRule));
+        await ExpressionSelected.InvokeAsync(new QuestionExpression(_number1, Operator, _number2, _questionRule));
     }
 }

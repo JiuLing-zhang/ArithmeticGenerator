@@ -60,7 +60,22 @@ public partial class Index
         }
     }
 
-    private List<DisplayExpression>? Expressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions?.OrderBy(x => x.DisplayName).ToList();
+    private List<QuestionExpression>? QuestionExpressions => QuestionConfig.Sheets?.FirstOrDefault(x => x.IsActive)?.Expressions;
+    private List<DisplayExpression>? DisplayExpressions
+    {
+        get
+        {
+            List<DisplayExpression>? displayExpressions = null;
+            if (QuestionExpressions != null)
+            {
+                displayExpressions = QuestionExpressions
+                    .Select(x => new DisplayExpression(x.Number1, x.Operator, x.Number2, x.QuestionRule))
+                    .OrderBy(x => x.DisplayName)
+                    .ToList();
+            }
+            return displayExpressions;
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -200,7 +215,7 @@ public partial class Index
         SettingWriter.SaveQuestionConfig(QuestionConfig);
     }
 
-    private void OnExpressionSelected(DisplayExpression expression)
+    private void OnExpressionSelected(QuestionExpression expression)
     {
         if (QuestionConfig.Sheets == null)
         {
@@ -210,7 +225,7 @@ public partial class Index
 
         if (QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions == null)
         {
-            QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions = new List<DisplayExpression>();
+            QuestionConfig.Sheets.First(x => x.Name == SheetSelectItem).Expressions = new List<QuestionExpression>();
         }
         else
         {
@@ -244,20 +259,16 @@ public partial class Index
 
     private Task OnExport(ExportConfig exportConfig)
     {
-        if (Expressions == null)
+        if (QuestionExpressions == null)
         {
             Snackbar.Add("导出失败，未能加载题型库", Severity.Error);
             return Task.CompletedTask;
         }
-        var questionExpressions = new List<QuestionExpression>();
-        foreach (var expression in Expressions)
-        {
-            questionExpressions.Add(new QuestionExpression(expression.Number1, expression.Operator, expression.Number2, expression.QuestionRule));
-        }
+
         var fileExt = exportConfig.FileType.ToString().ToLower();
         var fileName = $"ArithmeticGenerator_{DateTime.Now:yyyyMMdd_HHmmss}.{fileExt}";
         fileName = Path.Combine(System.Environment.CurrentDirectory, fileName);
-        QuestionExport.Export(fileName, exportConfig, questionExpressions);
+        QuestionExport.Export(fileName, exportConfig, QuestionExpressions);
         Snackbar.Add($"导出成功:{fileName}", Severity.Success, config =>
         {
             config.Action = "打开";

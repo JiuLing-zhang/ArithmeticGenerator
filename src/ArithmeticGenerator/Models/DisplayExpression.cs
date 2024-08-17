@@ -11,11 +11,6 @@ namespace ArithmeticGenerator.Models;
 public class DisplayExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, QuestionRule questionRule) : BaseExpression(number1, @operator, number2, questionRule)
 {
     /// <summary>
-    /// 唯一键值
-    /// </summary>
-    public string Key => $"{Number1}_{Operator}_{Number2}_{QuestionRule.ResultRule}";
-
-    /// <summary>
     /// 显示名称
     /// </summary>
     public string DisplayName => $"{Number1} {Operator.GetDescription()} {Number2}";

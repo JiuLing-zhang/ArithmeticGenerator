@@ -11,6 +11,6 @@ public class SheetConfig
 {
     public string Name { get; set; } = "";
     public bool IsActive { get; set; }
-    public List<DisplayExpression>? Expressions { get; set; }
+    public List<QuestionExpression>? Expressions { get; set; }
 }
 

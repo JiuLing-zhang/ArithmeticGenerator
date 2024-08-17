@@ -55,11 +55,11 @@ public partial class App : Application
                     var sheetConfig = new SheetConfig();
                     sheetConfig.Name = oldSheet.Name;
                     sheetConfig.IsActive = oldSheet.IsActive;
-                    sheetConfig.Expressions = new List<DisplayExpression>();
+                    sheetConfig.Expressions = new List<QuestionExpression>();
                     foreach (var oldExpression in oldSheet.Expressions)
                     {
                         sheetConfig.Expressions.Add(
-                            new DisplayExpression(
+                            new QuestionExpression(
                                 oldExpression.Number1,
                                 oldExpression.Operator,
                                 oldExpression.Number2,

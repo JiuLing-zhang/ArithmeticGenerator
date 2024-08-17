@@ -1,4 +1,5 @@
-﻿using ArithmeticGenerator.Enums;
+﻿using System.Text.Json.Serialization;
+using ArithmeticGenerator.Enums;
 
 namespace ArithmeticGenerator.Models;
 
@@ -11,6 +12,12 @@ namespace ArithmeticGenerator.Models;
 /// <param name="questionRule">题目规则</param>
 public class BaseExpression(CustomNumber number1, OperatorEnum @operator, CustomNumber number2, QuestionRule questionRule)
 {
+    /// <summary>
+    /// 唯一键值
+    /// </summary>
+    [JsonIgnore]
+    public string Key => $"{Number1}_{Operator}_{Number2}_{QuestionRule.ResultRule}";
+
     /// <summary>
     /// 第一位数
     /// </summary>
@@ -30,5 +37,4 @@ public class BaseExpression(CustomNumber number1, OperatorEnum @operator, Custom
     /// 结果约束条件
     /// </summary>
     public QuestionRule QuestionRule { get; set; } = questionRule;
-
 }
