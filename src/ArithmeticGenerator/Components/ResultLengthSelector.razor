@@ -1,0 +1,69 @@
+﻿<MudGrid Spacing="1">
+    <MudItem xs="6">
+        <MudTooltip Text="计算结果的最小位数" Delay="50" Placement="Placement.Top">
+            <MudToggleGroup @bind-Value="MinLength"
+                            T="int"
+                            Size="Size.Small"
+                            Style="width: 400px">
+                <MudToggleItem Value="-1" Text="@("最小位数")" Disabled="true" />
+                <MudToggleItem Value="1" />
+                <MudToggleItem Value="2" />
+                <MudToggleItem Value="3" />
+                <MudToggleItem Value="4" />
+                <MudToggleItem Value="0" Text="不限制" />
+            </MudToggleGroup>
+        </MudTooltip>
+    </MudItem>
+    <MudItem xs="6">
+        <MudTooltip Text="计算结果的最大位数" Delay="50" Placement="Placement.Top">
+            <MudToggleGroup @bind-Value="MaxLength"
+                            T="int"
+                            Size="Size.Small"
+                            Style="width: 400px">
+                <MudToggleItem Value="-1" Text="@("最大位数")" Disabled="true" />
+                <MudToggleItem Value="1" />
+                <MudToggleItem Value="2" />
+                <MudToggleItem Value="3" />
+                <MudToggleItem Value="4" />
+                <MudToggleItem Value="99999" Text="不限制" />
+            </MudToggleGroup>
+        </MudTooltip>
+    </MudItem>
+</MudGrid>
+
+@code {
+
+    private int _minLength;
+    [Parameter]
+    public int MinLength
+    {
+        get => _minLength;
+        set
+        {
+            if (_minLength != value)
+            {
+                _minLength = value;
+                MinLengthChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    private int _maxLength;
+    [Parameter]
+    public int MaxLength
+    {
+        get => _maxLength;
+        set
+        {
+            if (_maxLength != value)
+            {
+                _maxLength = value;
+                MaxLengthChanged.InvokeAsync(value);
+            }
+        }
+    }
+    [Parameter]
+    public EventCallback<int> MinLengthChanged { get; set; }
+    [Parameter]
+    public EventCallback<int> MaxLengthChanged { get; set; }
+}

@@ -12,8 +12,18 @@ internal class QuestionAdd(CustomNumber number1, CustomNumber number2) : MathQue
 {
     public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
     {
-        var value1 = CreateNumberValue(Number1);
-        var value2 = CreateNumberValue(Number2);
-        return BuilderQuestion(value1, value2, resultUseUnderline);
+        while (true)
+        {
+            var value1 = CreateNumberValue(Number1);
+            var value2 = CreateNumberValue(Number2);
+
+            var result = (value1 + value2).ToString();
+            if (result.Length < questionRule.MinLength || result.Length > questionRule.MaxLength)
+            {
+                continue;
+            }
+
+            return BuilderQuestion(value1, value2, resultUseUnderline);
+        }
     }
 }

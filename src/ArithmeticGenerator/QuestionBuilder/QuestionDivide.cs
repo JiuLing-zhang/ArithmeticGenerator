@@ -60,6 +60,11 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
                 }
             }
 
+            var resultString = (value1 / value2).ToString();
+            if (resultString.Length < questionRule.MinLength || resultString.Length > questionRule.MaxLength)
+            {
+                continue;
+            }
             break;
         }
         while (true);

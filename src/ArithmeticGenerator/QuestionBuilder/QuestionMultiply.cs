@@ -11,23 +11,32 @@ internal class QuestionMultiply(CustomNumber number1, CustomNumber number2) : Ma
 {
     public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
     {
-        decimal value1;
-        decimal value2;
-
-        if ((questionRule.ResultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
+        while (true)
         {
-            do
+            decimal value1;
+            decimal value2;
+
+            if ((questionRule.ResultRule & ResultRuleEnum.ValueIsNotOne) == ResultRuleEnum.ValueIsNotOne)
+            {
+                do
+                {
+                    value1 = CreateNumberValue(Number1);
+                    value2 = CreateNumberValue(Number2);
+                } while (value1 == 1 || value2 == 1);
+            }
+            else
             {
                 value1 = CreateNumberValue(Number1);
                 value2 = CreateNumberValue(Number2);
             }
-            while (value1 == 1 || value2 == 1);
+
+            var resultString = (value1 * value2).ToString();
+            if (resultString.Length < questionRule.MinLength || resultString.Length > questionRule.MaxLength)
+            {
+                continue;
+            }
+
+            return BuilderQuestion(value1, value2, resultUseUnderline);
         }
-        else
-        {
-            value1 = CreateNumberValue(Number1);
-            value2 = CreateNumberValue(Number2);
-        }
-        return BuilderQuestion(value1, value2, resultUseUnderline);
     }
 }

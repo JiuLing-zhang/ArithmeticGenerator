@@ -27,11 +27,13 @@
 
 <NumberSelector NumberChanged="@OnNumber2Changed"></NumberSelector>
 
-<div class="d-flex align-center mt-2">
-    <MudText Typo="Typo.subtitle2">结果约束</MudText>
+<MudPaper Class="mt-2" Elevation="0">
+    <ResultLengthSelector @bind-MinLength="@(_questionRule.MinLength)" @bind-MaxLength="@(_questionRule.MaxLength)" />
+</MudPaper>
+
+<MudPaper Elevation="0" Class="mt-2" Height="30px">
     <MudChipSet @bind-SelectedValues="ResultRules"
                 T="ResultRuleEnum"
-                Class="ml-2"
                 SelectionMode="SelectionMode.MultiSelection"
                 CheckMark="true"
                 Variant="Variant.Filled"
@@ -51,16 +53,15 @@
             <MudChip Value="@(ResultRuleEnum.ResultIsNotOne)" Text="@(ResultRuleEnum.ResultIsNotOne.GetDescription())" />
         }
     </MudChipSet>
-
-    <MudChip T="string" Class="ml-8" Color="Color.Primary" Disabled="true">@($"示例：{_numberValue}")</MudChip>
-</div>
-
-<MudButton Variant="Variant.Filled"
-           StartIcon="@Icons.Material.Filled.Save"
-           Color="Color.Primary"
-           Size="Size.Small"
-           Class="mt-4"
-           OnClick="AddNumberExpression">添加题型</MudButton>
+</MudPaper>
+<MudPaper Class="d-flex align-center mt-4" Elevation="0">
+    <MudButton Variant="Variant.Filled"
+               StartIcon="@Icons.Material.Filled.Save"
+               Color="Color.Primary"
+               Size="Size.Small"
+               OnClick="AddNumberExpression">添加题型</MudButton>
+    <MudText Typo="Typo.subtitle2" Class="ml-3">@($"示例：{_numberValue}")</MudText>
+</MudPaper>
 
 @code {
     private const string ToggleStyle = "custom-striped";
@@ -75,7 +76,7 @@
             CreateNumberExpression();
         }
     }
-    private QuestionRule _questionRule = new QuestionRule();
+    private QuestionRule _questionRule = new QuestionRule() { MinLength = 0, MaxLength = 99999 };
     private IReadOnlyCollection<ResultRuleEnum> _resultRules = null!;
     public IReadOnlyCollection<ResultRuleEnum> ResultRules
     {
@@ -142,6 +143,12 @@
         {
             return;
         }
-        await ExpressionSelected.InvokeAsync(new QuestionExpression(_number1, Operator, _number2, _questionRule));
+        var questionRule = new QuestionRule()
+            {
+                MaxLength = _questionRule.MaxLength,
+                MinLength = _questionRule.MinLength,
+                ResultRule = _questionRule.ResultRule
+            };
+        await ExpressionSelected.InvokeAsync(new QuestionExpression(_number1, Operator, _number2, questionRule));
     }
 }

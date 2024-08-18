@@ -18,17 +18,41 @@ public class DisplayExpression(CustomNumber number1, OperatorEnum @operator, Cus
     /// <summary>
     /// 显示描述
     /// </summary>
-    public string DisplayDescription => CheckResultRuleEnumValues(QuestionRule.ResultRule);
+    public string DisplayDescription => BuildDescription();
 
-    private string CheckResultRuleEnumValues(ResultRuleEnum result)
+    private string BuildDescription()
+    {
+        var descriptions = new List<string>
+        {
+            BuildResultRuleDescription(),
+            BuildResultLengthDescription()
+        };
+        return string.Join(',', descriptions);
+    }
+
+    private string BuildResultRuleDescription()
     {
         var descriptions = new List<string>();
         foreach (ResultRuleEnum rule in Enum.GetValues(typeof(ResultRuleEnum)))
         {
-            if (result.HasFlag(rule))
+            if (QuestionRule.ResultRule.HasFlag(rule))
             {
                 descriptions.Add(rule.GetDescription());
             }
+        }
+        return string.Join(",", descriptions);
+    }
+
+    private string BuildResultLengthDescription()
+    {
+        var descriptions = new List<string>();
+        if (QuestionRule.MinLength != 0)
+        {
+            descriptions.Add($"结果最小位数：{QuestionRule.MinLength}");
+        }
+        if (QuestionRule.MaxLength != 99999)
+        {
+            descriptions.Add($"结果最大位数：{QuestionRule.MaxLength}");
         }
         return string.Join(",", descriptions);
     }

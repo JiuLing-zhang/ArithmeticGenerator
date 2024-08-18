@@ -16,7 +16,7 @@ public class BaseExpression(CustomNumber number1, OperatorEnum @operator, Custom
     /// 唯一键值
     /// </summary>
     [JsonIgnore]
-    public string Key => $"{Number1}_{Operator}_{Number2}_{QuestionRule.ResultRule}";
+    public string Key => $"{Number1}_{Operator}_{Number2}_{QuestionRule}";
 
     /// <summary>
     /// 第一位数

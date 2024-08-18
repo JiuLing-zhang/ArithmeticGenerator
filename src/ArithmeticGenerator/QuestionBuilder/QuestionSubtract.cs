@@ -11,28 +11,37 @@ internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : Ma
 {
     public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
     {
-        decimal value1;
-        decimal value2;
-
-        if ((questionRule.ResultRule & ResultRuleEnum.GreaterThanZero) == ResultRuleEnum.GreaterThanZero)
+        while (true)
         {
-            if (number1.Part1Length < Number2.Part1Length)
-            {
-                return "不存在这样的等式！";
-            }
+            decimal value1;
+            decimal value2;
 
-            do
+            if ((questionRule.ResultRule & ResultRuleEnum.GreaterThanZero) == ResultRuleEnum.GreaterThanZero)
+            {
+                if (number1.Part1Length < Number2.Part1Length)
+                {
+                    return "不存在这样的等式！";
+                }
+
+                do
+                {
+                    value1 = CreateNumberValue(Number1);
+                    value2 = CreateNumberValue(Number2);
+                } while (value1 <= value2);
+            }
+            else
             {
                 value1 = CreateNumberValue(Number1);
                 value2 = CreateNumberValue(Number2);
             }
-            while (value1 <= value2);
+
+            var resultString = (value1 - value2).ToString();
+            if (resultString.Length < questionRule.MinLength || resultString.Length > questionRule.MaxLength)
+            {
+                continue;
+            }
+
+            return BuilderQuestion(value1, value2, resultUseUnderline);
         }
-        else
-        {
-            value1 = CreateNumberValue(Number1);
-            value2 = CreateNumberValue(Number2);
-        }
-        return BuilderQuestion(value1, value2, resultUseUnderline);
     }
 }
