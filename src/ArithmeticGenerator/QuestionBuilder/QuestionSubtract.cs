@@ -9,7 +9,7 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Subtract, number1, number2)
 {
-    public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
+    public override string GenerateQuestion(QuestionRule questionRule)
     {
         while (true)
         {
@@ -40,7 +40,7 @@ internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : Ma
             {
                 continue;
             }
-
+            var resultUseUnderline = (questionRule.ResultRule & ResultRuleEnum.ResultUseUnderline) == ResultRuleEnum.ResultUseUnderline;
             return BuilderQuestion(value1, value2, resultUseUnderline);
         }
     }

@@ -30,5 +30,11 @@ public enum ResultRuleEnum
     /// 结果不等于1
     /// </summary>
     [Description("结果不等于1")]
-    ResultIsNotOne = 8
+    ResultIsNotOne = 8,
+
+    /// <summary>
+    /// 答案下划线
+    /// </summary>
+    [Description("答案下划线")]
+    ResultUseUnderline = 16
 }

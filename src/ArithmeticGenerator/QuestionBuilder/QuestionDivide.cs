@@ -9,7 +9,7 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Divide, number1, number2)
 {
-    public override string GenerateQuestion(QuestionRule questionRule, bool resultUseUnderline)
+    public override string GenerateQuestion(QuestionRule questionRule)
     {
         decimal value1;
         decimal value2;
@@ -68,6 +68,8 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
             break;
         }
         while (true);
+
+        var resultUseUnderline = (questionRule.ResultRule & ResultRuleEnum.ResultUseUnderline) == ResultRuleEnum.ResultUseUnderline;
         return BuilderQuestion(value1, value2, resultUseUnderline);
     }
 

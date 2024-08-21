@@ -38,6 +38,9 @@
                 CheckMark="true"
                 Variant="Variant.Filled"
                 Color="Color.Primary">
+
+        <MudChip Value="@(ResultRuleEnum.ResultUseUnderline)" Text="@(ResultRuleEnum.ResultUseUnderline.GetDescription())" />
+
         @if (Operator == OperatorEnum.Subtract)
         {
             <MudChip Value="@(ResultRuleEnum.GreaterThanZero)" Text="@(ResultRuleEnum.GreaterThanZero.GetDescription())" />
@@ -123,7 +126,7 @@
         _numberValue = "";
         if (_number1 != null && _number2 != null)
         {
-            _numberValue = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_questionRule, true);
+            _numberValue = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_questionRule);
         }
     }
 

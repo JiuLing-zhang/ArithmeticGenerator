@@ -3,29 +3,19 @@
 <MudText Typo="Typo.subtitle2">导出设置</MudText>
 
 <MudGrid Class="align-end">
-    <MudItem xs="3">
+    <MudItem xs="4">
         <MudNumericField @bind-Value="_exportConfig.QuestionCount" Label="题目总数" Variant="Variant.Text" Min="1" Max="500" />
     </MudItem>
-    <MudItem xs="3">
+    <MudItem xs="4">
         <MudNumericField @bind-Value="_exportConfig.QuestionsPerRow" Label="每行题目数量" Variant="Variant.Text" Min="1" Max="20" />
     </MudItem>
-    <MudItem xs="3">
-        <MudTooltip Text="打开【1+1=___】；关闭【1+1=】" Placement="Placement.Top">
-            <MudCheckBox @bind-Value="@(_exportConfig.ResultUseUnderline)"
-                         Label="@("答案下划线")"
-                         Size="Size.Small"
-                         Dense="true"
-                         Color="Color.Primary" />
-        </MudTooltip>
-    </MudItem>
-    <MudItem xs="3">
+    <MudItem xs="4">
         <MudCheckBox @bind-Value="@(_exportConfig.IncludeSeq)"
                      Label="@("包含序号")"
                      Size="Size.Small"
                      Dense="true"
                      Color="Color.Primary" />
     </MudItem>
-
 </MudGrid>
 
 <MudToggleGroup @bind-Value="_exportConfig.TopicRule"
@@ -72,7 +62,6 @@
             QuestionCount = 100,
             QuestionsPerRow = 4,
             IncludeSeq = true,
-            ResultUseUnderline = true,
             TopicRule = TopicRuleEnum.Random,
             FileType = FileTypeEnum.XLSX
         };
