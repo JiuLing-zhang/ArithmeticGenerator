@@ -62,8 +62,19 @@
                StartIcon="@Icons.Material.Filled.Save"
                Color="Color.Primary"
                Size="Size.Small"
+               Disabled="@(_sampleQuestion.IsEmpty())"
                OnClick="AddNumberExpression">添加题型</MudButton>
-    <MudText Typo="Typo.subtitle2" Class="ml-3">@($"示例：{_numberValue}")</MudText>
+    <MudText Typo="Typo.subtitle2" Class="ml-3">
+        @if (_sampleQuestion.IsEmpty())
+        {
+            @($"示例：不存在这样的等式！")
+        }
+        else
+        {
+            @($"示例：{_sampleQuestion}")
+        }
+
+    </MudText>
 </MudPaper>
 
 @code {
@@ -95,7 +106,7 @@
     private CustomNumber? _number1;
     private CustomNumber? _number2;
 
-    private string _numberValue = "";
+    private string _sampleQuestion = "";
 
 
     [Parameter]
@@ -123,10 +134,10 @@
 
     private void CreateNumberExpression()
     {
-        _numberValue = "";
+        _sampleQuestion = "";
         if (_number1 != null && _number2 != null)
         {
-            _numberValue = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_questionRule);
+            _sampleQuestion = QuestionFactory.Create(Operator, _number1, _number2).GenerateQuestion(_questionRule);
         }
     }
 

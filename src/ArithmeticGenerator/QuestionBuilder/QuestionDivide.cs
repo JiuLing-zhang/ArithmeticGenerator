@@ -9,7 +9,7 @@ namespace ArithmeticGenerator.QuestionBuilder;
 /// <param name="number2"></param>
 internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : MathQuestion(OperatorEnum.Divide, number1, number2)
 {
-    public override string GenerateQuestion(QuestionRule questionRule)
+    protected override string GenerateQuestionInner(QuestionRule questionRule)
     {
         decimal value1;
         decimal value2;
@@ -71,6 +71,41 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
 
         var resultUseUnderline = (questionRule.ResultRule & ResultRuleEnum.ResultUseUnderline) == ResultRuleEnum.ResultUseUnderline;
         return BuilderQuestion(value1, value2, resultUseUnderline);
+    }
+
+    protected override bool QuestionRuleValid(QuestionRule questionRule)
+    {
+        if (questionRule.MinLength > questionRule.MaxLength)
+        {
+            return false;
+        }
+
+        if ((questionRule.ResultRule & ResultRuleEnum.IsInt) == ResultRuleEnum.IsInt)
+        {
+            if (number1.Part1Length < Number2.Part1Length)
+            {
+                return false;
+            }
+
+            if (number1.Part2Length != Number2.Part2Length)
+            {
+                return false;
+            }
+        }
+
+        var maxResult = MaxNumber2 / MinNumber1;
+        var minResult = MinNumber2 / +MinNumber1;
+
+        if (questionRule.MaxLength < minResult.ToString().Length)
+        {
+            return false;
+        }
+
+        if (questionRule.MinLength > maxResult.ToString().Length)
+        {
+            return false;
+        }
+        return true;         
     }
 
     private (int integerPartDigits, int fractionalPartDigits) GetDecimalDigits(decimal number)
