@@ -44,6 +44,7 @@
             {
                 _minLength = value;
                 MinLengthChanged.InvokeAsync(value);
+                LengthChanged.InvokeAsync();
             }
         }
     }
@@ -59,6 +60,7 @@
             {
                 _maxLength = value;
                 MaxLengthChanged.InvokeAsync(value);
+                LengthChanged.InvokeAsync();
             }
         }
     }
@@ -66,4 +68,7 @@
     public EventCallback<int> MinLengthChanged { get; set; }
     [Parameter]
     public EventCallback<int> MaxLengthChanged { get; set; }
+
+    [Parameter]
+    public EventCallback LengthChanged { get; set; }
 }

@@ -28,7 +28,9 @@
 <NumberSelector NumberChanged="@OnNumber2Changed"></NumberSelector>
 
 <MudPaper Class="mt-2" Elevation="0">
-    <ResultLengthSelector @bind-MinLength="@(_questionRule.MinLength)" @bind-MaxLength="@(_questionRule.MaxLength)" />
+    <ResultLengthSelector @bind-MinLength="@(_questionRule.MinLength)"
+                          @bind-MaxLength="@(_questionRule.MaxLength)"
+                          LengthChanged="CreateNumberExpression" />
 </MudPaper>
 
 <MudPaper Elevation="0" Class="mt-2" Height="30px">
