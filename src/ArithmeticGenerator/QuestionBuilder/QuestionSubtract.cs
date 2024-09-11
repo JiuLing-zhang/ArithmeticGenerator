@@ -54,8 +54,8 @@ internal class QuestionSubtract(CustomNumber number1, CustomNumber number2) : Ma
             }
         }
 
-        var maxResult = MaxNumber2 - MinNumber1;
-        var minResult = MinNumber2 - MinNumber2;
+        var maxResult = MaxNumber1 - MinNumber2;
+        var minResult = MinNumber1 - MaxNumber2;
 
         if (questionRule.MaxLength < minResult.ToString().Length)
         {

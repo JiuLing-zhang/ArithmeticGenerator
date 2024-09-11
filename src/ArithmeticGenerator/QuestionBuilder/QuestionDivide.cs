@@ -93,8 +93,8 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
             }
         }
 
-        var maxResult = MaxNumber2 / MinNumber1;
-        var minResult = MinNumber2 / +MinNumber1;
+        var maxResult = MaxNumber1 / MinNumber2;
+        var minResult = MinNumber1 / MinNumber2;
 
         if (questionRule.MaxLength < minResult.ToString().Length)
         {
@@ -105,7 +105,7 @@ internal class QuestionDivide(CustomNumber number1, CustomNumber number2) : Math
         {
             return false;
         }
-        return true;         
+        return true;
     }
 
     private (int integerPartDigits, int fractionalPartDigits) GetDecimalDigits(decimal number)
