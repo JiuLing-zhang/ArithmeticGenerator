@@ -1,12 +1,13 @@
 ﻿using JiuLing.AutoUpgrade.Shared;
 using JiuLing.AutoUpgrade.Shell;
 using System.IO;
+using JiuLing.AutoUpgrade.Shell.Enums;
 
 namespace ArithmeticGenerator;
 internal class UpdateHelper(AppSettings appSettings)
 {
     public async Task DoAsync(bool isBackgroundCheck)
-    {        
+    {
         var autoUpgradePath = Resources.Resource.AutoUpgradePath;
         if (autoUpgradePath.IsEmpty())
         {
@@ -32,6 +33,7 @@ internal class UpdateHelper(AppSettings appSettings)
                 config.Theme = theme;
                 config.IsCheckSign = true;
                 config.IconPath = iconPath;
+                config.VersionFormat = VersionFormatEnum.MajorMinorBuild;
             })
             .RunAsync();
     }
