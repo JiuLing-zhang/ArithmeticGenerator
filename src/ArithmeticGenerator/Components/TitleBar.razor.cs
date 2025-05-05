@@ -1,4 +1,6 @@
-﻿namespace ArithmeticGenerator.Components;
+﻿using JiuLing.TitleBarKit;
+
+namespace ArithmeticGenerator.Components;
 public partial class TitleBar
 {
     [Parameter]
@@ -7,7 +9,7 @@ public partial class TitleBar
     private string _maximizerIcon = default!;
 
     [Inject]
-    private IWindowTitleBar WindowTitleBar { get; set; } = default!;
+    private TitleBarService TitleBarService { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -17,24 +19,24 @@ public partial class TitleBar
 
     private Task MinimizeAsync()
     {
-        WindowTitleBar.Minimize();
+        TitleBarService.Controller.Minimize();
         return Task.CompletedTask;
     }
 
     private async Task MaximizeAsync()
     {
-        WindowTitleBar.Maximize();
+        TitleBarService.Controller.Maximize();
         await SetMaximizerIconAsync();
     }
     private Task CloseAsync()
     {
-        WindowTitleBar.Close();
+        TitleBarService.Controller.Close();
         return Task.CompletedTask;
     }
 
     private Task SetMaximizerIconAsync()
     {
-        if (WindowTitleBar.IsMaximized)
+        if (TitleBarService.Controller.IsMaximized)
         {
             _maximizerIcon = Icons.Material.Filled.CloseFullscreen;
         }

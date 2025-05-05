@@ -1,4 +1,6 @@
-﻿namespace ArithmeticGenerator.Shared;
+﻿using JiuLing.TitleBarKit;
+
+namespace ArithmeticGenerator.Shared;
 public partial class MainLayout
 {
     private bool _isDarkMode;
@@ -7,7 +9,7 @@ public partial class MainLayout
     private string _version = "";
 
     [Inject]
-    private IWindowMoving WindowMoving { get; set; } = default!;
+    private TitleBarService TitleBarService { get; set; } = default!;
 
     [Inject]
     private AppSettings AppSettings { get; set; } = default!;
@@ -99,12 +101,7 @@ public partial class MainLayout
 
     private void MouseDown()
     {
-        WindowMoving.MouseDown();
-    }
-
-    private void MouseUp()
-    {
-        WindowMoving.MouseUp();
+        TitleBarService.DragHandler.DragMove();
     }
 
     private async Task OpenPayDialog()

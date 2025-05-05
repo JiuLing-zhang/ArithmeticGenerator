@@ -8,6 +8,7 @@ using System.Text.Json;
 using ArithmeticGenerator.Models;
 using ArithmeticGenerator.QuestionBuilder;
 using ArithmeticGenerator.QuestionsCheck;
+using JiuLing.TitleBarKit;
 
 namespace ArithmeticGenerator;
 /// <summary>
@@ -36,6 +37,7 @@ public partial class App : Application
     private void Init()
     {
         IServiceCollection services = new ServiceCollection();
+        services.AddWpfTitleBarKit();
         services.AddSingleton<SettingWriter>();
         services.AddSingleton<AppSettings>((_) =>
         {
@@ -85,8 +87,6 @@ public partial class App : Application
         services.AddSingleton<QuestionExport>();
         services.AddSingleton<QuestionImporterFactory>();
         services.AddSingleton<ExpressionValidator>();
-        services.AddSingleton<IWindowMoving, WindowMoving>();
-        services.AddSingleton<IWindowTitleBar, WindowTitleBar>();
         services.AddLocalization();
         services.AddWpfBlazorWebView();
         services.AddBlazorWebViewDeveloperTools();

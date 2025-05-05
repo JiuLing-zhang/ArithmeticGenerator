@@ -1,5 +1,4 @@
-﻿global using ArithmeticGenerator.Platforms;
-global using JiuLing.CommonLibs.ExtensionMethods;
+﻿global using JiuLing.CommonLibs.ExtensionMethods;
 global using JiuLing.CommonLibs.Log;
 global using JiuLing.CommonLibs.Text;
 global using MudBlazor;

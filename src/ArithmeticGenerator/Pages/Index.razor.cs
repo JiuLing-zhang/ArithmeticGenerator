@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using ArithmeticGenerator.Enums;
 using ArithmeticGenerator.QuestionsCheck;
+using JiuLing.TitleBarKit;
 
 namespace ArithmeticGenerator.Pages;
 public partial class Index
@@ -21,9 +22,6 @@ public partial class Index
 
     [Inject]
     private UpdateHelper UpdateHelper { get; set; } = default!;
-
-    [Inject]
-    private IWindowTitleBar WindowTitleBar { get; set; } = default!;
 
     [Inject]
     private ISnackbar Snackbar { get; set; } = default!;
@@ -90,10 +88,6 @@ public partial class Index
         {
             await AddSheetAsync();
         }
-    }
-    private void Restart()
-    {
-        WindowTitleBar.Restart();
     }
 
     private void SaveSettings()
