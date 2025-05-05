@@ -273,7 +273,7 @@ public partial class Index
         {
             config.Action = "打开";
             config.ActionColor = MudBlazor.Color.Primary;
-            config.Onclick = _ =>
+            config.OnClick = _ =>
             {
                 OpenFile(exportConfig.FileType, fileName);
                 return Task.CompletedTask;

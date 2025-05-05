@@ -25,15 +25,14 @@ internal class UpdateHelper(AppSettings appSettings)
         {
             iconPath = "";
         }
-        await AutoUpgradeFactory.Create()
-            .UseHttpMode(autoUpgradePath)
-            .SetUpgrade(config =>
+        await UpgradeFactory.CreateHttpApp(autoUpgradePath)
+            .SetUpgrade(builder =>
             {
-                config.IsBackgroundCheck = isBackgroundCheck;
-                config.Theme = theme;
-                config.IsCheckSign = true;
-                config.IconPath = iconPath;
-                config.VersionFormat = VersionFormatEnum.MajorMinorBuild;
+                builder.WithBackgroundCheck(isBackgroundCheck)
+                .WithTheme(theme)
+                .WithSignCheck(true)
+                .WithIcon(iconPath)
+                .WithVersionFormat(VersionFormatEnum.MajorMinorBuild);
             })
             .RunAsync();
     }
