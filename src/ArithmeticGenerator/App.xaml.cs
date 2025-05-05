@@ -50,24 +50,31 @@ public partial class App : Application
                 questionConfig.Version = "2.0";
                 questionConfig.Sheets = new List<SheetConfig>();
 
-                foreach (var oldSheet in oldQuestionConfig.Sheets)
+                if (oldQuestionConfig.Sheets != null)
                 {
-                    var sheetConfig = new SheetConfig();
-                    sheetConfig.Name = oldSheet.Name;
-                    sheetConfig.IsActive = oldSheet.IsActive;
-                    sheetConfig.Expressions = new List<QuestionExpression>();
-                    foreach (var oldExpression in oldSheet.Expressions)
+                    foreach (var oldSheet in oldQuestionConfig.Sheets)
                     {
-                        sheetConfig.Expressions.Add(
-                            new QuestionExpression(
-                                oldExpression.Number1,
-                                oldExpression.Operator,
-                                oldExpression.Number2,
-                                new QuestionRule() { ResultRule = oldExpression.ResultRule })
-                            );
+                        var sheetConfig = new SheetConfig();
+                        sheetConfig.Name = oldSheet.Name;
+                        sheetConfig.IsActive = oldSheet.IsActive;
+                        sheetConfig.Expressions = new List<QuestionExpression>();
+                        if (oldSheet.Expressions != null)
+                        {
+                            foreach (var oldExpression in oldSheet.Expressions)
+                            {
+                                sheetConfig.Expressions.Add(
+                                    new QuestionExpression(
+                                        oldExpression.Number1,
+                                        oldExpression.Operator,
+                                        oldExpression.Number2,
+                                        new QuestionRule() { ResultRule = oldExpression.ResultRule })
+                                );
+                            }
+                        }
+                        questionConfig.Sheets.Add(sheetConfig);
                     }
-                    questionConfig.Sheets.Add(sheetConfig);
                 }
+
             }
             return questionConfig;
         });
